@@ -57,3 +57,7 @@ SEED_ADMIN_PASSWORD='your-strong-password' npm run seed:admin
 ## Security
 
 Secrets live in `.env` (see `.env.example`). Do not commit real API keys, database URIs, or production hosts.
+
+## License
+
+MIT. See [LICENSE](LICENSE).
