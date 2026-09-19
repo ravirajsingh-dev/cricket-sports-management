@@ -1,0 +1,110 @@
+@use "../variables" as *;
+
+.card {
+  background: transparent;
+  border-color: $theme-alpha-14;
+  color: $theme-text;
+}
+
+.card-header {
+  background: $gradient-card-header;
+  border-bottom: 1px solid $theme-alpha-14;
+  color: $theme-heading;
+  font-weight: $font-weight-bold;
+}
+
+.card-body {
+  background: transparent;
+  color: $theme-text;
+}
+
+// Rajwada-style panel cards (MainCard uses these classes)
+.common-panel-card {
+  border: 1px solid $theme-alpha-14;
+  border-radius: $radius-2xl;
+  margin-bottom: 10px;
+  background: $gradient-panel-card;
+  box-shadow: $shadow-card;
+  color: $theme-text;
+
+  > .card-header {
+    border-bottom: 1px solid $theme-alpha-14;
+    background: $gradient-card-header;
+    color: $theme-heading;
+    font-weight: $font-weight-bold;
+    letter-spacing: $letter-spacing-normal;
+  }
+
+  > .card-body {
+    padding: $spacing-lg;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: $theme-heading;
+    font-weight: $font-weight-bold;
+  }
+
+  p,
+  .text-muted {
+    color: $theme-muted;
+  }
+}
+
+.common-form-card {
+  border: 1px solid $theme-alpha-24;
+  border-radius: $radius-2xl;
+  background:
+    $gradient-form-card,
+    $theme-surface-alpha-88;
+  box-shadow:
+    $shadow-card-lg,
+    $shadow-inset-highlight;
+  padding: 1.1rem;
+  color: $theme-text;
+
+  .custom-heading-theam {
+    margin-bottom: 0.85rem;
+    color: $theme-heading;
+    font-weight: $font-weight-bold;
+  }
+}
+
+.entity-table-card {
+  border: 1px solid $theme-alpha-14;
+  border-radius: $radius-2xl;
+  margin-bottom: $spacing-lg;
+  overflow: hidden;
+  background: $gradient-panel-card;
+  box-shadow: $shadow-card;
+
+  > .card-body {
+    padding: 0;
+    background: transparent;
+  }
+}
+
+.table-filter-section {
+  h5 {
+    color: $theme-heading;
+    font-weight: $font-weight-bold;
+    margin-bottom: $spacing-xs;
+  }
+}
+
+.custom-heading-theam {
+  color: $theme-heading;
+  font-weight: $font-weight-bold;
+  letter-spacing: $letter-spacing-normal;
+}
+
+@media #{$xs} {
+  .common-form-card {
+    padding: 0.85rem;
+    border-radius: $radius-xl;
+  }
+}

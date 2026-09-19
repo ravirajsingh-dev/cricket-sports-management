@@ -1,0 +1,295 @@
+import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+  isAuthenticated: null,
+  loading: true,
+  loadingRegister: false,
+  loadingOnChangePassword: false,
+  showChangePassModal: false,
+  user: null,
+  forgotPasswordEmailVerifyMemberIdLoading: false,
+  forgotPasswordEmailSendOtpLoading: false,
+  forgotPasswordEmailResendOtpLoading: false,
+  forgotPasswordEmailVerifyOtpLoading: false,
+  forgotPasswordEmailResetLoading: false,
+  forgotPasswordEmailVerifyMemberIdSuccess: false,
+  forgotPasswordEmailSendOtpSuccess: false,
+  forgotPasswordEmailVerifyOtpSuccess: false,
+  forgotPasswordEmailResetSuccess: false,
+  error: {},
+};
+
+const authSlice = createSlice({
+  name: "auth",
+  initialState,
+  reducers: {
+    authTokenRefresh(state) {
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: false,
+      };
+    },
+
+    userLoaded(state, action) {
+      return {
+        ...state,
+        isAuthenticated: true,
+        loading: false,
+        user: action.payload,
+      };
+    },
+
+    registerSuccess(state, action) {
+      return {
+        ...state,
+        user: action.payload,
+        loadingRegister: false,
+      };
+    },
+
+    loginSuccess(state, action) {
+      const { user } = action.payload;
+      return {
+        ...state,
+        user,
+        isAuthenticated: true,
+        loading: false,
+        loadingOnChangePassword: false,
+        showChangePassModal: false,
+      };
+    },
+
+    registerFail(state, action) {
+      return {
+        ...state,
+        error: action.payload,
+        loadingRegister: false,
+      };
+    },
+
+    authError(state, action) {
+      return {
+        ...state,
+        error: action.payload,
+        isAuthenticated: false,
+        loading: false,
+        user: null,
+      };
+    },
+
+    logoutAuth(state) {
+      return {
+        ...state,
+        isAuthenticated: false,
+        loading: false,
+        user: null,
+      };
+    },
+
+    loginFail(state) {
+      return {
+        ...state,
+        isAuthenticated: false,
+        loading: false,
+        user: null,
+      };
+    },
+
+    loadingOnLoginSubmit(state) {
+      return {
+        ...state,
+        loading: true,
+      };
+    },
+    loadingOnRegisterSubmit(state) {
+      return {
+        ...state,
+        loadingRegister: true,
+      };
+    },
+    registerError(state, action) {
+      return {
+        ...state,
+        error: action.payload,
+        loading: false,
+        loadingRegister: false,
+      };
+    },
+
+    // Change password
+    setLoadingOnChangePassword(state) {
+      return {
+        ...state,
+        loadingOnChangePassword: true,
+        showChangePassModal: false,
+      };
+    },
+
+    changePasswordSuccess(state) {
+      return {
+        ...state,
+        loadingOnChangePassword: false,
+        showChangePassModal: true,
+      };
+    },
+    changePasswordError(state) {
+      return {
+        ...state,
+        loadingOnChangePassword: false,
+        showChangePassModal: false,
+      };
+    },
+
+    setLoadingOnForgotPasswordEmailSendOtp(state) {
+      return {
+        ...state,
+        forgotPasswordEmailSendOtpLoading: true,
+        forgotPasswordEmailSendOtpSuccess: false,
+      };
+    },
+
+    forgotPasswordEmailSendOtpSuccess(state) {
+      return {
+        ...state,
+        forgotPasswordEmailSendOtpLoading: false,
+        forgotPasswordEmailSendOtpSuccess: true,
+      };
+    },
+
+    forgotPasswordEmailSendOtpError(state) {
+      return {
+        ...state,
+        forgotPasswordEmailSendOtpLoading: false,
+        forgotPasswordEmailSendOtpSuccess: false,
+      };
+    },
+
+    setLoadingOnForgotPasswordEmailVerifyOtp(state) {
+      return {
+        ...state,
+        forgotPasswordEmailVerifyOtpLoading: true,
+        forgotPasswordEmailVerifyOtpSuccess: false,
+      };
+    },
+
+    forgotPasswordEmailVerifyOtpSuccess(state) {
+      return {
+        ...state,
+        forgotPasswordEmailVerifyOtpLoading: false,
+        forgotPasswordEmailVerifyOtpSuccess: true,
+      };
+    },
+
+    forgotPasswordEmailVerifyOtpError(state) {
+      return {
+        ...state,
+        forgotPasswordEmailVerifyOtpLoading: false,
+        forgotPasswordEmailVerifyOtpSuccess: false,
+      };
+    },
+
+    setLoadingOnForgotPasswordEmailReset(state) {
+      return {
+        ...state,
+        forgotPasswordEmailResetLoading: true,
+        forgotPasswordEmailResetSuccess: false,
+      };
+    },
+
+    forgotPasswordEmailResetSuccess(state) {
+      return {
+        ...state,
+        forgotPasswordEmailResetLoading: false,
+        forgotPasswordEmailResetSuccess: true,
+      };
+    },
+
+    forgotPasswordEmailResetError(state) {
+      return {
+        ...state,
+        forgotPasswordEmailResetLoading: false,
+        forgotPasswordEmailResetSuccess: false,
+      };
+    },
+
+    setLoadingOnForgotPasswordEmailVerifyMemberId(state) {
+      return {
+        ...state,
+        forgotPasswordEmailVerifyMemberIdLoading: true,
+        forgotPasswordEmailVerifyMemberIdSuccess: false,
+      };
+    },
+
+    forgotPasswordEmailVerifyMemberIdSuccess(state) {
+      return {
+        ...state,
+        forgotPasswordEmailVerifyMemberIdLoading: false,
+        forgotPasswordEmailVerifyMemberIdSuccess: true,
+      };
+    },
+
+    forgotPasswordEmailVerifyMemberIdError(state) {
+      return {
+        ...state,
+        forgotPasswordEmailVerifyMemberIdLoading: false,
+        forgotPasswordEmailVerifyMemberIdSuccess: false,
+      };
+    },
+
+    setLoadingOnForgotPasswordEmailResendOtp(state) {
+      return {
+        ...state,
+        forgotPasswordEmailResendOtpLoading: true,
+      };
+    },
+
+    forgotPasswordEmailResendOtpSuccess(state) {
+      return {
+        ...state,
+        forgotPasswordEmailResendOtpLoading: false,
+      };
+    },
+
+    forgotPasswordEmailResendOtpError(state) {
+      return {
+        ...state,
+        forgotPasswordEmailResendOtpLoading: false,
+      };
+    },
+  },
+});
+
+export const {
+  authTokenRefresh,
+  userLoaded,
+  registerSuccess,
+  loginSuccess,
+  loadingOnRegisterSubmit,
+  registerFail,
+  authError,
+  logoutAuth,
+  loginFail,
+  loadingOnLoginSubmit,
+  registerError,
+  setLoadingOnChangePassword,
+  changePasswordSuccess,
+  changePasswordError,
+  setLoadingOnForgotPasswordEmailSendOtp,
+  forgotPasswordEmailSendOtpSuccess,
+  forgotPasswordEmailSendOtpError,
+  setLoadingOnForgotPasswordEmailVerifyOtp,
+  forgotPasswordEmailVerifyOtpSuccess,
+  forgotPasswordEmailVerifyOtpError,
+  setLoadingOnForgotPasswordEmailReset,
+  forgotPasswordEmailResetSuccess,
+  forgotPasswordEmailResetError,
+  setLoadingOnForgotPasswordEmailVerifyMemberId,
+  forgotPasswordEmailVerifyMemberIdSuccess,
+  forgotPasswordEmailVerifyMemberIdError,
+  setLoadingOnForgotPasswordEmailResendOtp,
+  forgotPasswordEmailResendOtpSuccess,
+  forgotPasswordEmailResendOtpError,
+} = authSlice.actions;
+
+export default authSlice.reducer;

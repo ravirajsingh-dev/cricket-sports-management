@@ -1,0 +1,677 @@
+@use "sass:map";
+@use "sass:color";
+
+// =============================================================================
+// SINGLE SOURCE OF TRUTH — theme tokens
+// Change values here to restyle the entire client. Component SCSS must only
+// reference these tokens (no raw hex / ad-hoc rgba / magic spacing).
+// Active theme: $theme-ltcl — luxury midnight navy + soft metallic gold
+// =============================================================================
+
+$white: #ffffff;
+$black: #000000;
+
+$brand-youtube: #ff0000;
+
+// Type — recommended sports league stack (loaded via fonts.scss)
+// Bebas Neue = brand/display · Oswald = athletic heads · Barlow = readable body
+$google-fonts-url: "https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=Bebas+Neue&family=Oswald:wght@400;500;600;700&display=swap";
+$font-display: "Bebas Neue", "Arial Narrow", Impact, sans-serif;
+$font-heading: "Oswald", "Arial Narrow", sans-serif;
+$futurabook: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+$font-serif: $font-heading;
+
+// LTCL luxury sports — midnight navy + luminous champagne silk (no white / no muddy khaki)
+$ltcl-navy: #050a16;
+$ltcl-navy-card: #0f1c33;
+$ltcl-navy-panel: #152844;
+$ltcl-blue: #1a4f96;
+$ltcl-sky: #5b8fd4;
+$ltcl-gold: #d4a84b;
+$ltcl-gold-bright: #e6c56a;
+$ltcl-gold-deep: #b8892f;
+$ltcl-antique: $ltcl-gold-deep;
+// Soft khaki family — companions, not the main heading
+$ltcl-khaki: #c4ae78;
+$ltcl-khaki-light: #d4c396;
+$ltcl-khaki-deep: #9a8558;
+// Attractive heading + header text: luminous champagne silk (readable, premium, not white)
+$ltcl-silk: #e6d09a;
+$ltcl-silk-soft: #d4bf88;
+$ltcl-heading: $ltcl-silk;
+$ltcl-champagne: #ecd9a8;
+$ltcl-ivory: $ltcl-silk;
+$ltcl-teal: #2f8f86;
+$ltcl-white: #ffffff;
+$ltcl-mist: #c8d2e4;
+$ltcl-muted: #8fa0bc;
+$ltcl-surface-soft: color.mix($ltcl-navy-card, $ltcl-blue, 82%);
+$ltcl-border: rgba($ltcl-gold, 0.45);
+$ltcl-success: #3dba7a;
+$ltcl-danger: #e85d5d;
+
+$theme-ltcl: (
+  bg: $ltcl-navy,
+  surface: $ltcl-navy-card,
+  surface-alt: $ltcl-navy-panel,
+  surface-light: $ltcl-surface-soft,
+  text: $ltcl-mist,
+  heading: $ltcl-heading,
+  primary: $ltcl-gold,
+  secondary: $ltcl-blue,
+  border: $ltcl-border,
+  border-muted: rgba($ltcl-sky, 0.18),
+  muted: $ltcl-muted,
+  hover: rgba($ltcl-gold, 0.16),
+  disabled: color.mix($ltcl-navy-card, $ltcl-muted, 35%),
+  text-on-primary: $ltcl-navy,
+  text-on-surface: $ltcl-mist,
+  bg-light: $ltcl-navy-card,
+  danger: $ltcl-danger,
+  danger-hover: color.mix($ltcl-danger, $black, 82%),
+  success: $ltcl-success,
+  warning: $ltcl-gold-deep,
+  overlay-text: $ltcl-champagne,
+  brand-youtube: $brand-youtube,
+);
+
+$active-theme: $theme-ltcl;
+
+// Semantic theme tokens (use these in component SCSS)
+$theme-bg: map.get($active-theme, bg);
+$theme-surface: map.get($active-theme, surface);
+$theme-surface-alt: map.get($active-theme, surface-alt);
+$theme-surface-light: map.get($active-theme, surface-light);
+$theme-text: map.get($active-theme, text);
+$theme-heading: map.get($active-theme, heading);
+$theme-primary: map.get($active-theme, primary);
+$theme-secondary: map.get($active-theme, secondary);
+$theme-border: map.get($active-theme, border);
+$theme-border-muted: map.get($active-theme, border-muted);
+$theme-muted: map.get($active-theme, muted);
+$theme-hover: map.get($active-theme, hover);
+$theme-disabled: map.get($active-theme, disabled);
+$theme-text-on-primary: map.get($active-theme, text-on-primary);
+$theme-text-on-surface: map.get($active-theme, text-on-surface);
+$theme-bg-light: map.get($active-theme, bg-light);
+$theme-danger: map.get($active-theme, danger);
+$theme-danger-hover: map.get($active-theme, danger-hover);
+$theme-success: map.get($active-theme, success);
+$theme-warning: map.get($active-theme, warning);
+$theme-overlay-text: map.get($active-theme, overlay-text);
+$theme-brand-youtube: map.get($active-theme, brand-youtube);
+
+// Extra semantic accents (prefer these over raw $white in UI chrome)
+$theme-accent: $ltcl-gold;
+$theme-accent-bright: $ltcl-gold-bright;
+$theme-accent-deep: $ltcl-gold-deep;
+$theme-accent-alt: $ltcl-teal;
+$theme-highlight: $ltcl-champagne;
+$theme-khaki: $ltcl-khaki;
+$theme-khaki-light: $ltcl-khaki-light;
+$theme-silk: $ltcl-silk;
+$theme-sky: $ltcl-sky;
+
+// =============================================================================
+// ALPHA / SURFACE TOKENS — ban ad-hoc rgba($theme-*, …) in partials
+// =============================================================================
+
+$theme-alpha-faint: rgba($theme-primary, 0.08);
+$theme-alpha-soft: rgba($theme-primary, 0.15);
+$theme-alpha-mid: rgba($theme-primary, 0.25);
+$theme-alpha-strong: rgba($theme-primary, 0.45);
+
+$theme-alpha-06: rgba($theme-primary, 0.06);
+$theme-alpha-10: rgba($theme-primary, 0.1);
+$theme-alpha-12: rgba($theme-primary, 0.12);
+$theme-alpha-14: rgba($theme-primary, 0.14);
+$theme-alpha-16: rgba($theme-primary, 0.16);
+$theme-alpha-18: rgba($theme-primary, 0.18);
+$theme-alpha-20: rgba($theme-primary, 0.2);
+$theme-alpha-22: rgba($theme-primary, 0.22);
+$theme-alpha-24: rgba($theme-primary, 0.24);
+$theme-alpha-28: rgba($theme-primary, 0.28);
+$theme-alpha-32: rgba($theme-primary, 0.32);
+$theme-alpha-35: rgba($theme-primary, 0.35);
+$theme-alpha-38: rgba($theme-primary, 0.38);
+$theme-alpha-42: rgba($theme-primary, 0.42);
+$theme-alpha-55: rgba($theme-primary, 0.55);
+$theme-alpha-65: rgba($theme-primary, 0.65);
+$theme-alpha-70: rgba($theme-primary, 0.7);
+$theme-alpha-75: rgba($theme-primary, 0.75);
+$theme-alpha-82: rgba($theme-primary, 0.82);
+$theme-alpha-85: rgba($theme-primary, 0.85);
+$theme-alpha-88: rgba($theme-primary, 0.88);
+$theme-alpha-90: rgba($theme-primary, 0.9);
+$theme-alpha-92: rgba($theme-primary, 0.92);
+$theme-alpha-95: rgba($theme-primary, 0.95);
+$theme-alpha-97: rgba($theme-primary, 0.97);
+
+$theme-secondary-alpha-16: rgba($theme-secondary, 0.16);
+$theme-secondary-alpha-55: rgba($theme-secondary, 0.55);
+$theme-secondary-alpha-88: rgba($theme-secondary, 0.88);
+$theme-secondary-alpha-92: rgba($theme-secondary, 0.92);
+
+$theme-bg-alpha-35: rgba($theme-bg, 0.35);
+$theme-bg-alpha-45: rgba($theme-bg, 0.45);
+$theme-bg-alpha-60: rgba($theme-bg, 0.6);
+$theme-bg-alpha-65: rgba($theme-bg, 0.65);
+$theme-bg-alpha-70: rgba($theme-bg, 0.7);
+$theme-bg-alpha-75: rgba($theme-bg, 0.75);
+$theme-bg-alpha-82: rgba($theme-bg, 0.82);
+$theme-bg-alpha-88: rgba($theme-bg, 0.88);
+$theme-bg-alpha-92: rgba($theme-bg, 0.92);
+$theme-bg-alpha-95: rgba($theme-bg, 0.95);
+$theme-bg-alpha-96: rgba($theme-bg, 0.96);
+$theme-bg-alpha-97: rgba($theme-bg, 0.97);
+$theme-bg-alpha-98: rgba($theme-bg, 0.98);
+
+$theme-surface-alpha-18: rgba($theme-surface-light, 0.18);
+$theme-surface-alpha-35: rgba($theme-surface, 0.35);
+$theme-surface-alpha-55: rgba($theme-surface, 0.55);
+$theme-surface-alpha-85: rgba($theme-surface, 0.85);
+$theme-surface-alpha-88: rgba($theme-surface, 0.88);
+$theme-surface-alpha-90: rgba($theme-surface, 0.9);
+$theme-surface-alpha-92: rgba($theme-surface, 0.92);
+$theme-surface-alpha-94: rgba($theme-surface, 0.94);
+$theme-surface-alpha-96: rgba($theme-surface, 0.96);
+$theme-surface-alpha-98: rgba($theme-surface, 0.98);
+$theme-surface-alt-alpha-85: rgba($theme-surface-alt, 0.85);
+$theme-surface-light-alpha-55: rgba($theme-surface-light, 0.55);
+
+$theme-warning-alpha-12: rgba($theme-warning, 0.12);
+$theme-warning-alpha-22: rgba($theme-warning, 0.22);
+$theme-warning-alpha-28: rgba($theme-warning, 0.28);
+
+$theme-danger-alpha-12: rgba($theme-danger, 0.12);
+$theme-danger-alpha-18: rgba($theme-danger, 0.18);
+$theme-danger-alpha-28: rgba($theme-danger, 0.28);
+$theme-danger-alpha-50: rgba($theme-danger, 0.5);
+$theme-danger-alpha-55: rgba($theme-danger, 0.55);
+
+$theme-success-alpha-06: rgba($theme-success, 0.06);
+$theme-success-alpha-14: rgba($theme-success, 0.14);
+$theme-success-alpha-22: rgba($theme-success, 0.22);
+$theme-success-alpha-32: rgba($theme-success, 0.32);
+$theme-success-alpha-45: rgba($theme-success, 0.45);
+
+$theme-text-alpha-55: rgba($theme-text, 0.55);
+$theme-text-alpha-72: rgba($theme-text, 0.72);
+$theme-text-alpha-75: rgba($theme-text, 0.75);
+$theme-text-alpha-82: rgba($theme-text, 0.82);
+$theme-text-alpha-86: rgba($theme-text, 0.86);
+$theme-text-alpha-88: rgba($theme-text, 0.88);
+$theme-text-alpha-90: rgba($theme-text, 0.9);
+$theme-text-on-surface-alpha-75: rgba($theme-text-on-surface, 0.75);
+
+$theme-muted-alpha-20: rgba($theme-muted, 0.2);
+$theme-muted-alpha-35: rgba($theme-muted, 0.35);
+$theme-muted-alpha-50: rgba($theme-muted, 0.5);
+$theme-muted-alpha-75: rgba($theme-muted, 0.75);
+$theme-muted-alpha-85: rgba($theme-muted, 0.85);
+$theme-muted-alpha-86: rgba($theme-muted, 0.86);
+$theme-muted-alpha-92: rgba($theme-muted, 0.92);
+
+$theme-heading-alpha-62: rgba($theme-heading, 0.62);
+
+$theme-alpha-40: rgba($theme-primary, 0.4);
+$theme-alpha-50: rgba($theme-primary, 0.5);
+
+$black-alpha-06: rgba($black, 0.06);
+$black-alpha-08: rgba($black, 0.08);
+$black-alpha-10: rgba($black, 0.1);
+$black-alpha-14: rgba($black, 0.14);
+$black-alpha-15: rgba($black, 0.15);
+$black-alpha-18: rgba($black, 0.18);
+$black-alpha-22: rgba($black, 0.22);
+$black-alpha-25: rgba($black, 0.25);
+$black-alpha-28: rgba($black, 0.28);
+$black-alpha-30: rgba($black, 0.3);
+$black-alpha-32: rgba($black, 0.32);
+$black-alpha-mid: rgba($black, 0.35);
+$black-alpha-45: rgba($black, 0.45);
+$black-alpha-55: rgba($black, 0.55);
+$black-alpha-75: rgba($black, 0.75);
+$black-alpha-deep: rgba($black, 0.95);
+
+$white-alpha-06: rgba($white, 0.06);
+$white-alpha-12: rgba($white, 0.12);
+$white-alpha-22: rgba($white, 0.22);
+$white-alpha-45: rgba($white, 0.45);
+$white-alpha-85: rgba($white, 0.85);
+
+$overlay-scrim: $black-alpha-45;
+$overlay-scrim-deep: rgba($black, 0.92);
+$overlay-control-bg: $white-alpha-12;
+$overlay-control-bg-hover: $white-alpha-22;
+$image-fade-mask: $black;
+
+$surface-alpha-deep: $theme-surface-alpha-96;
+
+$state-danger-soft: $theme-danger-alpha-18;
+$state-danger-strong: $theme-danger-alpha-50;
+
+// Soft depth glows — midnight wash + quiet gold spark
+$layout-bg-orb-glow: rgba($ltcl-blue, 0.18);
+$layout-bg-gradient-start: $theme-bg;
+$layout-bg-gradient-end: color.mix($theme-bg, $ltcl-navy-panel, 55%);
+$home-section-surface-bg: linear-gradient(
+  165deg,
+  color.mix($theme-surface, $ltcl-blue, 90%) 0%,
+  $theme-surface 42%,
+  color.mix($theme-bg, $ltcl-gold, 96%) 100%
+);
+
+// Header — solid midnight glass, gold hover/active
+$layout-header-bg: linear-gradient(
+  180deg,
+  color.change($ltcl-navy, $alpha: 0.92) 0%,
+  color.change($ltcl-navy, $alpha: 0.82) 100%
+);
+$layout-header-bg-sticky: linear-gradient(
+  180deg,
+  color.change($ltcl-navy-card, $alpha: 0.94) 0%,
+  color.change($ltcl-navy, $alpha: 0.96) 100%
+);
+$layout-header-nav: $ltcl-silk;
+$layout-header-nav-hover: $ltcl-gold-bright;
+$layout-header-nav-active: $ltcl-gold;
+
+// Shared portal content column (header + page shells)
+$portal-content-max-width: 1400px;
+$portal-content-pad-x: clamp(0.75rem, 3vw, 1.5rem);
+
+// Decorative gold rule (section titles)
+$accent-rule: linear-gradient(
+  90deg,
+  transparent 0%,
+  $ltcl-gold 50%,
+  transparent 100%
+);
+$accent-rule-solid: $ltcl-gold;
+$accent-glow: 0 0 24px rgba($ltcl-gold, 0.35);
+
+// =============================================================================
+// BUTTON TOKENS — solid champagne gold CTA (shared client + admin)
+// Hover keeps the same border (no extra ring / border-color jump).
+// =============================================================================
+$btn-primary-bg: $ltcl-gold;
+$btn-primary-bg-image: linear-gradient(
+  180deg,
+  $ltcl-gold-bright 0%,
+  $ltcl-gold 52%,
+  $ltcl-gold-deep 100%
+);
+$btn-primary-bg-hover: $ltcl-gold-bright;
+$btn-primary-bg-image-hover: linear-gradient(
+  180deg,
+  color.mix($ltcl-gold-bright, $ltcl-champagne, 70%) 0%,
+  $ltcl-gold-bright 50%,
+  $ltcl-gold 100%
+);
+$btn-primary-color: $theme-text-on-primary;
+$btn-primary-border: transparent;
+$btn-primary-shadow: 0 8px 24px rgba($ltcl-gold, 0.32), 0 1px 0 rgba($ltcl-champagne, 0.35) inset;
+$btn-primary-shadow-hover: 0 14px 36px rgba($ltcl-gold, 0.45), $accent-glow, 0 1px 0 rgba($ltcl-champagne, 0.45) inset;
+
+$btn-secondary-bg: $theme-secondary;
+$btn-secondary-color: $ltcl-champagne;
+$btn-secondary-alpha-12: rgba($theme-secondary, 0.12);
+
+$btn-outline-bg: transparent;
+$btn-outline-bg-hover: rgba($ltcl-gold, 0.14);
+$btn-outline-border: rgba($ltcl-gold, 0.7);
+$btn-outline-border-hover: $btn-outline-border;
+$btn-outline-color: $ltcl-champagne;
+$btn-outline-color-hover: $ltcl-gold-bright;
+
+$btn-danger-bg: $theme-danger;
+$btn-danger-bg-hover: $theme-danger-hover;
+$btn-danger-color: $ltcl-champagne;
+$btn-danger-border: $theme-danger;
+$btn-danger-border-hover: $btn-danger-border;
+$btn-danger-shadow: 0 4px 14px $state-danger-soft;
+$btn-danger-shadow-hover: 0 4px 16px $state-danger-strong;
+
+$btn-success-bg: $theme-success;
+$btn-success-bg-hover: color.mix($theme-success, $ltcl-teal, 70%);
+$btn-success-color: $ltcl-navy;
+
+$btn-link-color: $theme-accent;
+$btn-link-color-hover: $theme-accent-bright;
+
+$btn-soft-bg: rgba($theme-surface-light, 0.55);
+$btn-soft-bg-hover: $theme-alpha-14;
+$btn-soft-border: rgba($ltcl-gold, 0.35);
+$btn-soft-color: $ltcl-champagne;
+$btn-soft-color-hover: $ltcl-gold-bright;
+
+$btn-ghost-bg: $theme-bg-alpha-45;
+$btn-ghost-bg-hover: rgba($ltcl-gold, 0.12);
+$btn-ghost-border: rgba($ltcl-gold, 0.4);
+$btn-ghost-color: $ltcl-mist;
+$btn-ghost-color-hover: $ltcl-gold-bright;
+
+$btn-disabled-bg: $theme-disabled;
+$btn-disabled-color: $theme-muted;
+
+// Bootstrap CSS custom properties (consumed by bootstrap.min.css)
+@function color-rgb-csv($value) {
+  @return "#{color.channel($value, "red", $space: rgb)}, #{color.channel($value, "green", $space: rgb)}, #{color.channel($value, "blue", $space: rgb)}";
+}
+
+$bs-primary-rgb: color-rgb-csv($theme-primary);
+$bs-secondary-rgb: color-rgb-csv($theme-secondary);
+$bs-success-rgb: color-rgb-csv($theme-success);
+$bs-warning-rgb: color-rgb-csv($theme-warning);
+$bs-danger-rgb: color-rgb-csv($theme-danger);
+$bs-body-bg-rgb: color-rgb-csv($theme-bg);
+$bs-body-color-rgb: color-rgb-csv($theme-text);
+
+// =============================================================================
+// SPACING, RADIUS, BORDERS, SHADOWS
+// =============================================================================
+
+$spacing-3xs: 0.15rem;
+$spacing-2xs: 0.25rem;
+$spacing-xs: 0.35rem;
+$spacing-sm: 0.5rem;
+$spacing-md: 0.75rem;
+$spacing-lg: 1rem;
+$spacing-xl: 1.25rem;
+$spacing-2xl: 1.5rem;
+$spacing-3xl: 2rem;
+$spacing-4xl: 2.5rem;
+$spacing-5xl: 2.75rem;
+$spacing-6xl: 3rem;
+
+// Legacy px alias used by gallery grid gap
+$spacing-px-sm: 8px;
+
+$radius-xs: 4px;
+$radius-sm: 8px;
+$radius-md: 10px;
+$radius-lg: 14px;
+$radius-xl: 18px;
+$radius-2xl: 24px;
+$radius-pill: 999px;
+$radius-circle: 50%;
+
+$border-width-thin: 1px;
+$border-width-md: 2px;
+$border-width-thick: 3px;
+$border-width-accent: 4px;
+
+// Form fields — deep panel + soft gold/sky focus
+$form-field-height: 48px;
+$form-field-padding-x: 0.95rem;
+$form-field-font-size: 1rem;
+$form-field-font-weight: 500;
+$form-field-line-height: 1.35;
+$form-field-bg: color.change($ltcl-navy, $alpha: 0.55);
+$form-field-border: rgba($ltcl-sky, 0.28);
+$form-field-border-hover: rgba($ltcl-gold, 0.55);
+$form-field-bg-disabled: rgba($theme-surface-light, 0.2);
+$form-field-border-disabled: rgba($ltcl-sky, 0.14);
+$form-field-text-disabled: $theme-muted-alpha-92;
+$form-field-focus-ring: 0 0 0 0.2rem rgba($ltcl-gold, 0.22);
+$form-field-focus-ring-danger: 0 0 0 0.2rem $state-danger-soft;
+$form-checkbox-size: 1.25rem;
+
+$shadow-md:
+  0 6px 16px -2px $black-alpha-32,
+  0 2px 6px -1px $black-alpha-18;
+$shadow-card: 0 18px 44px $black-alpha-45, 0 0 0 1px rgba($ltcl-gold, 0.16);
+$shadow-card-lg: 0 28px 60px $black-alpha-55, 0 0 0 1px rgba($ltcl-gold, 0.22), $accent-glow;
+$shadow-control: 0 10px 24px $black-alpha-32;
+$shadow-control-sm: 0 4px 14px $black-alpha-mid;
+$shadow-tab: 0 1px 3px $black-alpha-32;
+$shadow-breadcrumb: 0 16px 36px $black-alpha-45, 0 0 0 1px rgba($ltcl-gold, 0.18);
+$shadow-inset-highlight: inset 0 1px 0 $white-alpha-12;
+$shadow-header-sticky: 0 12px 32px $black-alpha-55, 0 1px 0 rgba($ltcl-gold, 0.12) inset;
+$shadow-header-inset: 0 1px 0 rgba($white, 0.06) inset;
+$shadow-drawer: -16px 0 48px $black-alpha-55;
+$shadow-focus-ring: 0 0 0 3px rgba($ltcl-gold, 0.28);
+$shadow-selected: 0 0 0 2px $ltcl-gold, 0 0 28px rgba($ltcl-gold, 0.35);
+
+// =============================================================================
+// TYPOGRAPHY
+// =============================================================================
+
+$font-size-2xs: 0.5625rem;
+$font-size-xs: 0.625rem;
+$font-size-sm: 0.6875rem;
+$font-size-md: 0.75rem;
+$font-size-base-sm: 0.8125rem;
+$font-size-base: 0.875rem;
+$font-size-md-plus: 0.9rem;
+$font-size-lg: 0.9375rem;
+$font-size-body: 1rem;
+$font-size-body-lg: 1.0625rem;
+$font-size-xl: 1.125rem;
+$font-size-2xl: 1.25rem;
+$font-size-3xl: 1.35rem;
+$font-size-4xl: 1.5rem;
+$font-size-5xl: 1.75rem;
+$font-size-6xl: 1.8rem;
+$font-size-root: 16px;
+
+// Medium heading scale (override Bootstrap's oversized defaults)
+$font-size-h1: clamp(1.35rem, 2.6vw, 1.7rem);
+$font-size-h2: clamp(1.2rem, 2.2vw, 1.45rem);
+$font-size-h3: clamp(1.1rem, 1.8vw, 1.3rem);
+$font-size-h4: clamp(1.05rem, 1.5vw, 1.2rem);
+$font-size-h5: $font-size-xl;
+$font-size-h6: $font-size-lg;
+$font-size-section-title: clamp(1.35rem, 3vw, 1.85rem);
+$font-size-brand: clamp(1.4rem, 2vw, 1.75rem);
+
+$font-weight-light: 300;
+$font-weight-normal: 400;
+$font-weight-medium: 500;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-extrabold: 800;
+
+$line-height-tight: 1;
+$line-height-snug: 1.15;
+$line-height-heading: 1.2;
+$line-height-base: 1.35;
+$line-height-relaxed: 1.5;
+$line-height-loose: 1.65;
+$line-height-body: 1.8;
+$line-height-prose: 1.85;
+
+$letter-spacing-tight: -0.02em;
+$letter-spacing-snug: 0.01em;
+$letter-spacing-normal: 0.02em;
+$letter-spacing-wide: 0.04em;
+$letter-spacing-wider: 0.06em;
+$letter-spacing-widest: 0.08em;
+$letter-spacing-display: 0.1em;
+$letter-spacing-label: 0.12em;
+$letter-spacing-eyebrow: 0.22em;
+
+// =============================================================================
+// MOTION, Z-INDEX, LAYOUT METRICS
+// =============================================================================
+
+$duration-fast: 0.15s;
+$duration-base: 0.2s;
+$duration-md: 0.28s;
+$duration-slow: 0.35s;
+$duration-slower: 0.45s;
+$duration-reveal: 0.7s;
+$ease-out: ease-out;
+$ease-standard: ease;
+$ease-in-out: ease-in-out;
+
+$z-header: 1050;
+$z-dropdown: 1100;
+$z-drawer-backdrop: 1055;
+$z-drawer: 1060;
+$z-lightbox: 1080;
+$z-skip-link: 10000;
+$z-back-to-top: 999;
+$z-select-menu: 9999;
+
+$header-bar-min-height: 88px;
+$header-bar-min-height-compact: 72px;
+$header-brand-size: 72px;
+$header-brand-img: 80px;
+$header-brand-img-mobile: 64px;
+$header-blur: 14px;
+$header-dropdown-min-width: 280px;
+$header-dropdown-max-width: 340px;
+
+$drawer-width: min(92vw, 420px);
+$drawer-close-size: 44px;
+
+$btn-min-height-sm: 36px;
+$btn-min-height-md: 44px;
+$btn-min-height-lg: 3rem;
+$btn-icon-size: 36px;
+$btn-icon-size-lg: 44px;
+
+$loader-dot-size: 12px;
+$loader-fallback-min-height: 500px;
+$spinner-size-sm: 22px;
+$spinner-size-md: 30px;
+$spinner-size-lg: 38px;
+
+$back-to-top-size: 42px;
+$back-to-top-size-mobile: 38px;
+
+$modal-welcome-max-width: 520px;
+$modal-news-media-height: 320px;
+$auth-card-max-width: 460px;
+$auth-card-wide-max-width: 920px;
+
+$opacity-disabled: 0.55;
+$opacity-muted: 0.75;
+$opacity-soft: 0.9;
+$opacity-full: 1;
+
+// Third-party library tokens
+$toastify-color-success: $theme-success;
+$toastify-color-error: $theme-danger;
+$toastify-color-warning: $theme-warning;
+$toastify-color-info: $ltcl-sky;
+$toastify-color-light: $theme-surface;
+$toastify-color-dark: $theme-bg;
+$toastify-text-color-light: $theme-text-on-surface;
+$toastify-text-color-dark: $theme-text;
+
+$placeholder-bg: color.mix($ltcl-navy-card, $ltcl-blue, 78%);
+$placeholder-glow-bg: color.mix($ltcl-navy-panel, $ltcl-gold, 72%);
+$placeholder-glow-opacity: 0.72;
+$placeholder-row-bg: $ltcl-navy-card;
+$placeholder-row-bg-alt: color.mix($ltcl-navy-card, $ltcl-navy, 55%);
+$placeholder-shimmer: linear-gradient(
+  90deg,
+  $ltcl-navy 0%,
+  $ltcl-navy-card 18%,
+  $ltcl-navy-panel 36%,
+  color.mix($ltcl-navy-panel, $ltcl-gold, 78%) 50%,
+  $ltcl-navy-panel 64%,
+  $ltcl-navy-card 82%,
+  $ltcl-navy 100%
+);
+$table-skeleton-bar-height: 0.85rem;
+$table-skeleton-row-min-height: 3.25rem;
+$table-skeleton-rows: 5;
+
+// =============================================================================
+// RESPONSIVE BREAKPOINTS
+// =============================================================================
+
+$bp-xxs: 380px;
+$bp-xs-max: 480px;
+$bp-sm-max: 575px;
+$bp-md-max: 767px;
+$bp-lg-max: 991px;
+$bp-xl-max: 1099px;
+$bp-drawer: 1200px;
+$bp-xxl: 1400px;
+
+$bp-sm-up: 576px;
+$bp-md-up: 768px;
+$bp-lg-up: 992px;
+$bp-tablet-max: 1024px;
+
+$xs: "(max-width: #{$bp-md-max})";
+$sm-down: "(max-width: #{$bp-sm-max})";
+$xs-down: "(max-width: #{$bp-xs-max})";
+$xxs-down: "(max-width: #{$bp-xxs})";
+$md-down: "(max-width: #{$bp-lg-max})";
+$drawer-up: "(min-width: #{$bp-drawer})";
+$xxl-up: "(min-width: #{$bp-xxl})";
+$sm-up: "(min-width: #{$bp-sm-up})";
+$md-up: "(min-width: #{$bp-md-up})";
+$lg-up: "(min-width: #{$bp-lg-up})";
+$md-only: "(min-width: #{$bp-md-up}) and (max-width: #{$bp-lg-max})";
+$tablet-landscape: "(min-width: #{$bp-md-up + 1px}) and (max-width: #{$bp-tablet-max})";
+$process-wide: "(min-width: #{$bp-xl-max + 1px})";
+$process-mid: "(min-width: #{$bp-md-up}) and (max-width: #{$bp-xl-max})";
+$xs-up: "(min-width: #{$bp-xs-max})";
+$bp-md-max-inclusive: "(max-width: #{$bp-md-max + 1px})";
+$bp-sm-max-inclusive: "(max-width: #{$bp-sm-max + 1px})";
+
+// Shared gradients — soft gold sheen + navy depth + teal alternate spark
+$gradient-nav-active: linear-gradient(
+  135deg,
+  $ltcl-gold-bright 0%,
+  $ltcl-gold 48%,
+  $ltcl-gold-deep 100%
+);
+$gradient-card-header: linear-gradient(
+  120deg,
+  color.mix($theme-surface, $ltcl-blue, 86%) 0%,
+  $theme-surface 50%,
+  color.mix($theme-bg, $ltcl-gold, 95%) 100%
+);
+$gradient-form-card: linear-gradient(
+  155deg,
+  color.change($ltcl-navy-panel, $alpha: 0.95) 0%,
+  color.change($ltcl-navy-card, $alpha: 0.92) 55%,
+  color.change($ltcl-navy, $alpha: 0.9) 100%
+);
+$gradient-section-panel: linear-gradient(
+  160deg,
+  $ltcl-navy-panel 0%,
+  $ltcl-navy-card 55%,
+  color.mix($ltcl-navy-card, $ltcl-teal, 94%) 100%
+);
+$gradient-text-gold: linear-gradient(
+  90deg,
+  $ltcl-gold-bright 0%,
+  $ltcl-champagne 45%,
+  $ltcl-gold 100%
+);
+
+// Section accent divider — slim solid gold/navy shimmer rule
+// Seamless tile (starts+ends on navy) — duplicated in mixin for smooth loop
+$gradient-accent-line-shimmer: linear-gradient(
+  90deg,
+  $ltcl-navy 0%,
+  $ltcl-navy-panel 14%,
+  $ltcl-gold-deep 28%,
+  $ltcl-gold 40%,
+  $ltcl-gold-bright 48%,
+  $ltcl-silk 50%,
+  $ltcl-gold-bright 52%,
+  $ltcl-gold 60%,
+  $ltcl-gold-deep 72%,
+  $ltcl-navy-panel 86%,
+  $ltcl-navy 100%
+);
+$accent-cricket-divider-width: min(5.5rem, 38vw);
+$accent-cricket-divider-height: 2px;
+$accent-cricket-divider-width-sm: min(4rem, 32vw);
+$accent-cricket-divider-height-sm: 1px;
+
+// Legacy aliases
+$accent-star-divider-width: $accent-cricket-divider-width;
+$accent-star-divider-height: $accent-cricket-divider-height;
+$accent-star-divider-width-sm: $accent-cricket-divider-width-sm;
+$accent-star-divider-height-sm: $accent-cricket-divider-height-sm;

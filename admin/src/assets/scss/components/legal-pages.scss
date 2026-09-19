@@ -1,0 +1,39 @@
+@use "../variables" as *;
+
+.legal-pages-admin__section {
+  border: 1px solid $theme-alpha-22;
+  border-radius: $radius-xl;
+  padding: $spacing-lg;
+  margin-bottom: $spacing-lg;
+  background: linear-gradient(
+    145deg,
+    $theme-surface-alpha-72 0%,
+    $theme-bg-alpha-88 100%
+  );
+  box-shadow:
+    $shadow-inset-subtle,
+    $shadow-legal;
+
+  &:last-of-type {
+    margin-bottom: $spacing-sm;
+  }
+}
+
+.legal-pages-admin__section-meta {
+  color: $theme-text-on-surface-alpha-68;
+  font-size: $font-size-base-sm;
+  font-weight: $font-weight-semibold;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.legal-pages-admin-tabs {
+  .nav-link {
+    color: $theme-muted;
+
+    &.active {
+      color: $theme-primary;
+      font-weight: $font-weight-semibold;
+    }
+  }
+}

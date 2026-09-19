@@ -1,0 +1,520 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+$about-ease: cubic-bezier(0.22, 1, 0.36, 1);
+$about-duration: 0.55s;
+
+// =============================================================================
+// ABOUT US — premium magazine wrap (mobile + desktop)
+// heading + desc flow beside image, then full-width under image
+// =============================================================================
+
+@keyframes home-about-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(0.94);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes home-about-image-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes home-about-ambiance {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+@keyframes home-about-ring-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.home-about {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(2.6rem, 6.2vw, 5.25rem) 0;
+  background:
+    radial-gradient(
+      ellipse 78% 52% at 50% -8%,
+      rgba($ltcl-blue, 0.22),
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse 40% 35% at 100% 40%,
+      rgba($ltcl-gold, 0.05),
+      transparent 70%
+    ),
+    $home-section-surface-bg;
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  &--embedded {
+    padding: clamp(2.35rem, 5.6vw, 4.4rem) 0;
+  }
+
+  &__ambiance {
+    position: absolute;
+    pointer-events: none;
+    border-radius: $radius-circle;
+    filter: blur(8px);
+    animation: home-about-ambiance 9s ease-in-out infinite;
+
+    &--a {
+      inset: auto -8% -28% 35%;
+      height: 52%;
+      background: radial-gradient(
+        ellipse at center,
+        rgba($ltcl-gold, 0.12),
+        transparent 70%
+      );
+    }
+
+    &--b {
+      inset: 18% 55% auto -12%;
+      height: 38%;
+      width: 48%;
+      background: radial-gradient(
+        ellipse at center,
+        rgba($ltcl-blue, 0.16),
+        transparent 72%
+      );
+      animation-delay: -3.5s;
+    }
+  }
+
+  &__shell {
+    position: relative;
+    max-width: 68rem;
+    margin-inline: auto;
+  }
+
+  &__intro {
+    text-align: center;
+    padding: 0 clamp(0.35rem, 2vw, 1rem) clamp(2rem, 4.5vw, 3.25rem);
+  }
+
+  &__eyebrow {
+    display: inline-block;
+    margin: 0 0 clamp(0.7rem, 1.9vw, 1rem);
+    padding: 0.32rem 0.95rem;
+    border: $border-width-thin solid rgba($ltcl-gold, 0.45);
+    border-radius: $radius-pill;
+    background: linear-gradient(
+      135deg,
+      rgba($ltcl-gold, 0.16),
+      rgba($ltcl-gold, 0.06)
+    );
+    box-shadow: 0 0 20px rgba($ltcl-gold, 0.12);
+    font-family: $font-heading;
+    font-size: clamp(0.68rem, 1.8vw, 0.78rem);
+    font-weight: $font-weight-semibold;
+    letter-spacing: $letter-spacing-eyebrow;
+    text-transform: uppercase;
+    color: $ltcl-gold-bright;
+  }
+
+  &__intro-line {
+    margin-top: clamp(1.05rem, 2.5vw, 1.55rem);
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &__title {
+    font-family: $font-heading;
+    font-size: clamp(1.45rem, 5.4vw, 2.05rem);
+    font-weight: $font-weight-bold;
+    line-height: 1.16;
+    color: $theme-heading;
+    margin: 0 0 $spacing-md;
+    letter-spacing: $letter-spacing-wider;
+    text-transform: uppercase;
+    word-break: break-word;
+    text-wrap: balance;
+    text-shadow: 0 0 40px rgba($ltcl-gold, 0.12);
+
+    .accent,
+    em,
+    span {
+      color: $theme-accent;
+      font-style: normal;
+      text-shadow: 0 0 28px rgba($ltcl-gold, 0.28);
+    }
+  }
+
+  &__lead {
+    max-width: 38rem;
+    margin: 0 auto;
+    font-size: clamp(0.92rem, 2.4vw, 1.08rem);
+    line-height: 1.78;
+    color: $ltcl-mist;
+    padding-inline: 0.2rem;
+  }
+
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2.75rem, 6vw, 4.25rem);
+  }
+
+  &__row {
+    position: relative;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+
+    &::after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+  }
+
+  // Default: image on right — heading/desc wrap on left, then under
+  &__media {
+    float: right;
+    width: min(44%, 22rem);
+    max-width: 100%;
+    margin: 0.2rem 0 clamp(0.9rem, 2.3vw, 1.25rem) clamp(1.1rem, 3.2vw, 2.15rem);
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
+  }
+
+  &__media-glow {
+    position: absolute;
+    inset: 4% 2%;
+    border-radius: $radius-circle;
+    background: radial-gradient(
+      ellipse at center,
+      rgba($ltcl-gold, 0.32) 0%,
+      rgba($ltcl-gold, 0.1) 28%,
+      rgba($ltcl-blue, 0.14) 48%,
+      transparent 72%
+    );
+    filter: blur(16px);
+    z-index: 0;
+    pointer-events: none;
+    animation: home-about-glow-pulse 5s ease-in-out infinite;
+  }
+
+  &__media-ring {
+    position: absolute;
+    inset: -6%;
+    border-radius: $radius-circle;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.55;
+    background: conic-gradient(
+      from 0deg,
+      transparent 0%,
+      rgba($ltcl-gold, 0.35) 18%,
+      transparent 36%,
+      rgba($ltcl-blue, 0.25) 55%,
+      transparent 72%,
+      rgba($ltcl-gold-bright, 0.3) 88%,
+      transparent 100%
+    );
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 0);
+    mask: radial-gradient(farthest-side, transparent calc(100% - 1.5px), #000 0);
+    animation: home-about-ring-spin 18s linear infinite;
+  }
+
+  &__media img {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: auto;
+    max-height: clamp(172px, 36vw, 310px);
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    border-radius: $radius-md;
+    filter:
+      drop-shadow(0 16px 32px rgba($black, 0.48))
+      drop-shadow(0 0 18px rgba($ltcl-gold, 0.12));
+    transition:
+      transform $about-duration $about-ease,
+      filter $about-duration $about-ease;
+  }
+
+  // Alternate: image on left
+  &__row--reverse &__media {
+    float: left;
+    margin: 0.2rem clamp(1.1rem, 3.2vw, 2.15rem) clamp(0.9rem, 2.3vw, 1.25rem) 0;
+  }
+
+  &__row.is-visible {
+    .home-about__media img {
+      animation: home-about-image-rise 0.9s $about-ease both;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &__row:hover &__media-glow {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+
+    &__row:hover &__media-ring {
+      opacity: 0.85;
+      animation-duration: 10s;
+    }
+
+    &__row:hover &__media img {
+      transform: translateY(-6px) scale(1.03);
+      filter:
+        drop-shadow(0 22px 40px rgba($black, 0.5))
+        drop-shadow(0 0 28px rgba($ltcl-gold, 0.28));
+    }
+  }
+
+  &__row--image-only &__media {
+    float: none;
+    width: min(100%, 28rem);
+    margin: 0 auto;
+    display: block;
+
+    img {
+      max-height: clamp(200px, 48vw, 380px);
+      margin-inline: auto;
+    }
+  }
+
+  &__row--text-only {
+    max-width: 44rem;
+    margin-inline: auto;
+    text-align: center;
+
+    .home-about__heading-line {
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  &__heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+    font-family: $font-heading;
+    font-size: clamp(1.15rem, 3.2vw, 1.7rem);
+    font-weight: $font-weight-bold;
+    line-height: 1.28;
+    color: $ltcl-silk;
+    margin: 0 0 clamp(0.7rem, 1.7vw, 1rem);
+    word-break: break-word;
+    letter-spacing: 0.012em;
+  }
+
+  &__heading-text {
+    display: inline;
+    text-shadow: 0 1px 0 rgba($black, 0.2);
+  }
+
+  &__heading-line {
+    display: block;
+    width: min(3.6rem, 28vw);
+    height: 2px;
+    margin-top: clamp(0.55rem, 1.5vw, 0.85rem);
+    border-radius: $radius-pill;
+    background: linear-gradient(
+      90deg,
+      $ltcl-gold-bright,
+      rgba($ltcl-gold, 0.35),
+      transparent
+    );
+    box-shadow: 0 0 12px rgba($ltcl-gold, 0.35);
+  }
+
+  // Keep overflow visible so paragraphs wrap under the floated image
+  &__text {
+    color: $ltcl-mist;
+    line-height: 1.8;
+    font-size: clamp(0.92rem, 2.2vw, 1.05rem);
+    overflow: visible;
+
+    p {
+      margin: 0 0 0.95rem;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__read-more {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    font: inherit;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.03em;
+    color: $ltcl-gold;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: color 0.3s $about-ease;
+
+    &:hover,
+    &:focus-visible {
+      color: $ltcl-gold-bright;
+      outline: none;
+      text-decoration: underline;
+      text-underline-offset: 0.2em;
+      text-shadow: 0 0 12px rgba($ltcl-gold, 0.35);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-about {
+    &__ambiance,
+    &__media-glow,
+    &__media-ring {
+      animation: none;
+    }
+
+    &__media img,
+    &__read-more {
+      transition: none !important;
+    }
+
+    &__row.is-visible {
+      .home-about__media img {
+        animation: none;
+      }
+    }
+  }
+}
+
+@media #{$md-up} {
+  .home-about {
+    &__media {
+      width: min(42%, 23rem);
+
+      img {
+        max-height: 320px;
+      }
+    }
+
+    &__text {
+      font-size: 1.04rem;
+    }
+
+    &__heading {
+      font-size: 1.7rem;
+    }
+  }
+}
+
+@media #{$xs-down} {
+  .home-about {
+    &__eyebrow {
+      font-size: 0.66rem;
+      padding: 0.24rem 0.72rem;
+    }
+
+    &__media {
+      width: min(46%, 11.75rem);
+      margin-left: 0.9rem;
+      margin-bottom: 0.8rem;
+
+      img {
+        max-height: 152px;
+        border-radius: $radius-sm;
+      }
+    }
+
+    // Keep motion design visible on mobile (same as desktop)
+    &__media-glow {
+      inset: 0;
+      opacity: 0.9;
+      filter: blur(12px);
+      animation-duration: 4.2s;
+    }
+
+    &__media-ring {
+      inset: -10%;
+      opacity: 0.7;
+      animation-duration: 14s;
+    }
+
+    &__row--reverse &__media {
+      margin-left: 0;
+      margin-right: 0.9rem;
+    }
+
+    &__heading {
+      font-size: 1.08rem;
+    }
+
+    &__text {
+      font-size: 0.9rem;
+      line-height: 1.7;
+    }
+  }
+}
+
+@media #{$xxs-down} {
+  .home-about {
+    &__media {
+      width: min(44%, 10.25rem);
+      margin-left: 0.7rem;
+
+      img {
+        max-height: 134px;
+      }
+    }
+
+    &__row--reverse &__media {
+      margin-right: 0.7rem;
+    }
+
+    &__heading {
+      font-size: 1rem;
+    }
+
+    &__text {
+      font-size: 0.85rem;
+    }
+
+    &__media-glow {
+      inset: -2%;
+      filter: blur(10px);
+    }
+
+    &__media-ring {
+      inset: -12%;
+      opacity: 0.75;
+    }
+  }
+}
+
+.about-us-page {
+  min-height: 40vh;
+  background: $theme-bg;
+}

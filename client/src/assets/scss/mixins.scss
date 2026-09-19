@@ -1,0 +1,167 @@
+@use "sass:string";
+@use "./variables" as *;
+
+// Encode a Sass color as %23RRGGBB for use inside SVG data-URI strings.
+@function color-to-url($value) {
+  @return "%23" + string.slice(#{$value}, 2);
+}
+
+@mixin transition($time) {
+  -webkit-transition: all $time $ease-out 0s;
+  -moz-transition: all $time $ease-out 0s;
+  -ms-transition: all $time $ease-out 0s;
+  -o-transition: all $time $ease-out 0s;
+  transition: all $time $ease-out 0s;
+}
+
+// -----------------------------------------------------------------------------
+// Button surfaces — always use these (tokens live in variables.scss)
+// -----------------------------------------------------------------------------
+
+@mixin btn-primary-surface {
+  background-color: $btn-primary-bg !important;
+  background-image: $btn-primary-bg-image !important;
+  border-color: $btn-primary-border !important;
+  color: $btn-primary-color !important;
+  box-shadow: $btn-primary-shadow;
+}
+
+@mixin btn-primary-surface-hover {
+  background-color: $btn-primary-bg-hover !important;
+  background-image: $btn-primary-bg-image-hover !important;
+  border-color: $btn-primary-border !important;
+  color: $btn-primary-color !important;
+  box-shadow: $btn-primary-shadow-hover;
+}
+
+@mixin btn-primary-surface-plain {
+  background-color: $btn-primary-bg;
+  background-image: $btn-primary-bg-image;
+  border-color: $btn-primary-border;
+  color: $btn-primary-color;
+  box-shadow: $btn-primary-shadow;
+}
+
+@mixin btn-primary-surface-plain-hover {
+  background-color: $btn-primary-bg-hover;
+  background-image: $btn-primary-bg-image-hover;
+  border-color: $btn-primary-border;
+  color: $btn-primary-color;
+  box-shadow: $btn-primary-shadow-hover;
+}
+
+@mixin btn-outline-surface {
+  background-color: $btn-outline-bg;
+  border: 1px solid $btn-outline-border !important;
+  color: $btn-outline-color;
+  box-shadow: none;
+}
+
+@mixin btn-outline-surface-hover {
+  background-color: $btn-outline-bg-hover;
+  border-color: $btn-outline-border !important;
+  color: $btn-outline-color-hover;
+  box-shadow: none;
+}
+
+@mixin btn-danger-surface {
+  background-color: $btn-danger-bg !important;
+  background-image: none !important;
+  border: 1px solid $btn-danger-border !important;
+  color: $btn-danger-color !important;
+  box-shadow: $btn-danger-shadow;
+}
+
+@mixin btn-danger-surface-hover {
+  background-color: $btn-danger-bg-hover !important;
+  border-color: $btn-danger-border !important;
+  color: $btn-danger-color !important;
+  box-shadow: $btn-danger-shadow-hover;
+}
+
+@mixin btn-soft-surface {
+  background-color: $btn-soft-bg;
+  border: 1px solid $btn-soft-border;
+  color: $btn-soft-color;
+}
+
+@mixin btn-soft-surface-hover {
+  background-color: $btn-soft-bg-hover;
+  border-color: $btn-soft-border;
+  color: $btn-soft-color-hover;
+}
+
+@mixin btn-ghost-surface {
+  background: $btn-ghost-bg;
+  border: 1px solid $btn-ghost-border;
+  color: $btn-ghost-color;
+}
+
+@mixin btn-ghost-surface-hover {
+  background: $btn-ghost-bg-hover;
+  border-color: $btn-ghost-border;
+  color: $btn-ghost-color-hover;
+}
+
+@mixin btn-link-surface {
+  color: $btn-link-color;
+  background: transparent;
+  border: 0;
+}
+
+@mixin btn-link-surface-hover {
+  color: $btn-link-color-hover;
+}
+
+// -----------------------------------------------------------------------------
+// Accent divider — slim solid gold/navy rule + seamless shimmer
+// -----------------------------------------------------------------------------
+
+@keyframes accent-line-shimmer {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    // Move exactly one tile width (50% of 200%-wide strip) for a seamless loop
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@mixin accent-cricket-divider(
+  $width: $accent-cricket-divider-width,
+  $height: $accent-cricket-divider-height
+) {
+  position: relative;
+  display: block;
+  width: $width;
+  height: $height;
+  max-width: 100%;
+  margin-top: $spacing-lg;
+  overflow: hidden;
+  border: 0;
+  border-radius: $radius-pill;
+  box-shadow: 0 0 10px rgba($ltcl-gold, 0.28);
+  background-color: $ltcl-navy;
+
+  // Moving strip: two identical gradient tiles side-by-side
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 200%;
+    height: 100%;
+    background-image: $gradient-accent-line-shimmer, $gradient-accent-line-shimmer;
+    background-size: 50% 100%, 50% 100%;
+    background-position: 0 0, 100% 0;
+    background-repeat: no-repeat;
+    animation: accent-line-shimmer 2.2s linear infinite;
+    will-change: transform;
+  }
+}
+
+@mixin accent-star-divider(
+  $width: $accent-cricket-divider-width,
+  $height: $accent-cricket-divider-height
+) {
+  @include accent-cricket-divider($width, $height);
+}

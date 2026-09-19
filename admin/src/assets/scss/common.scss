@@ -1,0 +1,61 @@
+@use "./variables" as *;
+
+.dropdown-menu {
+  background: $theme-surface-alpha-98;
+  border: 1px solid $theme-alpha-28;
+  color: $theme-text;
+}
+
+.dropdown-item {
+  color: $theme-text;
+
+  &:hover,
+  &:focus {
+    background: $theme-alpha-14;
+    color: $theme-heading;
+  }
+}
+
+.nav-tabs .nav-link {
+  color: $theme-muted;
+
+  &:hover {
+    color: $theme-secondary;
+    border-color: $theme-alpha-mid;
+  }
+
+  &.active {
+    color: $theme-bg;
+    background: $gradient-nav-active;
+    border-color: $theme-alpha-55;
+  }
+}
+
+.alert {
+  border-radius: $radius-md;
+  border-width: 1px;
+}
+
+.alert-danger {
+  background: $theme-danger-alpha-12;
+  border-color: $theme-danger-alpha-28;
+  color: $theme-danger;
+}
+
+.alert-success {
+  background: $theme-success-alpha-22;
+  border-color: $theme-success-alpha-28;
+  color: $theme-success;
+}
+
+.alert-warning {
+  background: $theme-warning-alpha-22;
+  border-color: $theme-warning-alpha-28;
+  color: $theme-heading;
+}
+
+.alert-info {
+  background: $theme-secondary-alpha-22;
+  border-color: $theme-secondary-alpha-28;
+  color: $theme-sky;
+}

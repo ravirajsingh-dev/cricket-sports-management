@@ -1,0 +1,401 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// =============================================================================
+// react-data-table-component (v8) — theme via CSS vars from variables.scss
+// Library ships light defaults (#fff / #eee / #fafafa). Override at the root.
+// =============================================================================
+
+.rdt_table,
+.rdt_Table,
+.rdt_TableWrapper,
+.rdt_wrapper {
+  --rdt-color-bg: #{$table-row-bg};
+  --rdt-color-header-bg: #{$table-header-bg};
+  --rdt-color-footer-bg: #{$table-row-bg};
+  --rdt-color-text-primary: #{$table-row-text};
+  --rdt-color-text-secondary: #{$theme-muted};
+  --rdt-color-divider: #{$table-divider};
+  --rdt-color-striped: #{$table-row-bg-striped};
+  --rdt-color-striped-text: #{$table-row-text};
+  --rdt-color-highlight: #{$table-row-bg-hover};
+  --rdt-color-highlight-text: #{$table-row-text-hover};
+  --rdt-color-selected: #{$table-row-bg-selected};
+  --rdt-color-selected-text: #{$table-row-text};
+  --rdt-color-primary: #{$theme-primary};
+  --rdt-color-btn: #{$theme-muted};
+  --rdt-color-btn-hover: #{$theme-alpha-12};
+  --rdt-color-btn-focus: #{$theme-alpha-16};
+  --rdt-color-btn-disabled: #{$theme-muted-alpha-35};
+  --rdt-color-scheme: dark;
+  color-scheme: dark;
+}
+
+.rdt_Table,
+.rdt_table {
+  background: $table-row-bg !important;
+  color: $table-row-text !important;
+  border-radius: $radius-xl;
+  overflow: hidden;
+  border: 1px solid $theme-alpha-16;
+}
+
+.common-panel-card .card-body,
+.common-panel-card .card-body *,
+.rdt_TableWrapper,
+.rdt_TableWrapper *,
+.rdt_wrapper,
+.rdt_wrapper *,
+.rdt_Table,
+.rdt_table,
+.rdt_TableBody,
+.rdt_body,
+.rdt_TableHead,
+.rdt_head,
+.rdt_TableRow,
+.rdt_row,
+.rdt_TableBody > div,
+.rdt_Table > div {
+  scrollbar-width: thin;
+  scrollbar-color: $theme-alpha-42 $theme-bg-alpha-34;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $theme-bg-alpha-34;
+    border-radius: $radius-pill;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    border-radius: $radius-pill;
+    background: linear-gradient(
+      180deg,
+      $theme-secondary-alpha-62 0%,
+      $theme-alpha-38 100%
+    );
+  }
+}
+
+.rdt_TableHead,
+.rdt_head,
+.rdt_headRow {
+  background: linear-gradient(
+    120deg,
+    $theme-alpha-16 0%,
+    $theme-bg-alpha-45 100%
+  ) !important;
+  border-bottom: 1px solid $theme-alpha-22;
+  color: $theme-heading !important;
+}
+
+.rdt_TableHeadRow,
+.rdt_headRow {
+  min-height: 52px !important;
+  background: transparent !important;
+  color: $theme-heading !important;
+  border-bottom: 0 !important;
+}
+
+.rdt_TableCol,
+.rdt_cellBaseHead {
+  color: $theme-heading !important;
+  font-weight: $font-weight-bold;
+  font-size: 0.87rem;
+  letter-spacing: 0.015em;
+  white-space: normal !important;
+  overflow: visible !important;
+  text-overflow: unset !important;
+  line-height: 1.25;
+  padding: 0.85rem $spacing-lg;
+}
+
+.rdt_TableCol_Sortable,
+.rdt_columnSortable {
+  color: $theme-heading !important;
+  gap: $spacing-xs;
+
+  &:hover {
+    color: $theme-primary !important;
+  }
+}
+
+.rdt_TableBody,
+.rdt_body {
+  background: $table-row-bg !important;
+}
+
+// Rows — cover legacy (rdt_TableRow) + v8 (rdt_row) class names
+.rdt_TableRow,
+.rdt_row {
+  min-height: 52px !important;
+  background: $table-row-bg !important;
+  color: $table-row-text !important;
+  border-bottom: 1px solid $theme-alpha-12 !important;
+  transition: background-color 0.18s ease;
+
+  &:nth-child(even),
+  &.rdt_rowStriped {
+    background: $table-row-bg-striped !important;
+    color: $table-row-text !important;
+  }
+
+  &:hover,
+  &.rdt_rowHighlight:hover {
+    background: $table-row-bg-hover !important;
+    color: $table-row-text-hover !important;
+    outline-color: $table-row-bg !important;
+  }
+
+  &.rdt_rowSelected {
+    background: $table-row-bg-selected !important;
+    color: $table-row-text !important;
+  }
+
+  .rdt_TableCell,
+  .rdt_cellBase {
+    padding: 0.85rem $spacing-lg;
+    color: inherit !important;
+    font-size: 0.9rem;
+  }
+}
+
+.rdt_TableCell,
+.rdt_cellBase {
+  color: $table-row-text !important;
+  font-size: 0.9rem;
+}
+
+// Kill library light hover (#eee !important) if var cascade misses
+.rdt_rowHighlight:hover {
+  background-color: $table-row-bg-hover !important;
+  color: $table-row-text-hover !important;
+  outline: 1px solid $table-row-bg !important;
+}
+
+.rdt_rowStriped {
+  background-color: $table-row-bg-striped !important;
+  color: $table-row-text !important;
+}
+
+// Data table row selection checkboxes (react-data-table-component)
+.rdt_TableWrapper input[type="checkbox"],
+.rdt_Table input[type="checkbox"],
+.rdt_table input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 1.125rem;
+  height: 1.125rem;
+  margin: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  border-radius: $radius-sm;
+  border: $border-width-md solid $theme-alpha-42 !important;
+  background-color: $form-field-bg !important;
+  accent-color: $theme-primary;
+  transition:
+    background-color $duration-fast $ease-standard,
+    border-color $duration-fast $ease-standard,
+    box-shadow $duration-fast $ease-standard;
+
+  &:hover {
+    border-color: $theme-alpha-65 !important;
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    border-color: $theme-alpha-65 !important;
+    box-shadow: 0 0 0 0.2rem $theme-alpha-mid !important;
+  }
+
+  &:checked {
+    background-color: $theme-primary !important;
+    border-color: $theme-primary !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='#{color-to-url($theme-text-on-primary)}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 0.85rem;
+  }
+
+  &:indeterminate {
+    background-color: $theme-alpha-55 !important;
+    border-color: $theme-primary !important;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='#{color-to-url($theme-text-on-primary)}' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M5 10h10'/%3e%3c/svg%3e") !important;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 0.85rem;
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+}
+
+.rdt_Pagination,
+.rdt_pagination,
+.rdt_footer {
+  background: transparent !important;
+  color: $theme-text !important;
+  border-top: 0 !important;
+  justify-content: center !important;
+}
+
+.rdt_Progress,
+.rdt_progress,
+.rdt_bodyOverlay,
+.rdt_bodyOverlayEmpty,
+.rdt_noData {
+  background: $placeholder-row-bg !important;
+  background-color: $placeholder-row-bg !important;
+  color: $theme-text !important;
+  padding: 0 !important;
+}
+
+// Built-in RDT skeleton (if ever re-enabled) — keep themed
+.rdt_skeletonPulse {
+  background: $placeholder-shimmer !important;
+  background-size: 200% 100% !important;
+  animation: theme-placeholder-shimmer 1.8s linear infinite !important;
+}
+
+.common-panel-card,
+.entity-table-card {
+  .rdt_TableWrapper,
+  .rdt_wrapper,
+  .rdt_Table,
+  .rdt_table,
+  .rdt_TableBody,
+  .rdt_body,
+  .rdt_TableHead,
+  .rdt_head {
+    background: transparent !important;
+    background-color: transparent !important;
+  }
+}
+
+.entity-table-card {
+  .rdt_Table,
+  .rdt_table {
+    border-radius: 0;
+    border: none;
+    background: transparent !important;
+  }
+
+  .rdt_TableHead,
+  .rdt_head {
+    background: $theme-bg-alpha-55 !important;
+    border-bottom: 1px solid $theme-alpha-18;
+
+    .rdt_TableHeadRow,
+    .rdt_headRow {
+      min-height: 48px;
+    }
+
+    .rdt_TableCol,
+    .rdt_cellBaseHead {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: $letter-spacing-widest;
+    }
+  }
+
+  .rdt_TableBody .rdt_TableRow,
+  .rdt_body .rdt_row {
+    background: $table-row-bg !important;
+    border-bottom: 1px solid $theme-alpha-10;
+
+    &.rdt_rowStriped,
+    &:nth-child(even) {
+      background: $table-row-bg-striped !important;
+    }
+
+    &:hover,
+    &.rdt_rowHighlight:hover {
+      background: $table-row-bg-hover !important;
+      color: $table-row-text-hover !important;
+    }
+  }
+
+  .rdt_Pagination,
+  .rdt_pagination {
+    border-top: 1px solid $theme-alpha-14;
+    padding: $spacing-sm $spacing-md $spacing-md;
+  }
+}
+
+.bouncing-loader-container.data-table-progress {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding: $spacing-3xl $spacing-lg;
+  background: $theme-surface !important;
+  background-color: $theme-surface !important;
+  color: $theme-text !important;
+}
+
+// Themed table skeleton (progressPending) — tokens from variables.scss
+.table-loading-skeleton {
+  width: 100%;
+  background: $placeholder-row-bg;
+  overflow: hidden;
+}
+
+.table-loading-skeleton__row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(4.5rem, 1fr));
+  gap: $spacing-lg;
+  align-items: center;
+  min-height: $table-skeleton-row-min-height;
+  padding: 0.85rem $spacing-lg;
+  background: $placeholder-row-bg;
+  border-bottom: 1px solid $theme-alpha-10;
+
+  &--alt {
+    background: $placeholder-row-bg-alt;
+  }
+}
+
+.table-loading-skeleton__bar {
+  display: block !important;
+  width: 100%;
+  max-width: 9.5rem;
+  height: $table-skeleton-bar-height;
+  min-height: $table-skeleton-bar-height !important;
+  margin: 0;
+}
+
+.table {
+  color: $theme-text;
+
+  thead th {
+    background: $theme-bg-alpha-55;
+    color: $theme-heading;
+    border-bottom: 1px solid $theme-alpha-18;
+  }
+
+  tbody tr {
+    background: $table-row-bg;
+    border-bottom: 1px solid $theme-alpha-10;
+    color: $table-row-text;
+    transition: background-color 0.18s ease;
+
+    &:nth-child(even) {
+      background: $table-row-bg-striped;
+    }
+
+    &:hover {
+      background: $table-row-bg-hover;
+      color: $table-row-text-hover;
+    }
+
+    td {
+      color: inherit;
+    }
+  }
+}

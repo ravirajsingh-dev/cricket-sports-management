@@ -1,0 +1,88 @@
+@use "../variables" as *;
+
+.card {
+  background: $theme-surface-alpha-88;
+  border: 1px solid rgba($ltcl-gold, 0.18);
+  border-radius: $radius-xl;
+  color: $theme-text;
+  box-shadow: $shadow-md;
+  transition:
+    border-color $duration-md $ease-standard,
+    box-shadow $duration-md $ease-standard,
+    transform $duration-md $ease-standard;
+
+  &:hover {
+    border-color: rgba($ltcl-gold, 0.45);
+    box-shadow: $shadow-card, $accent-glow;
+  }
+}
+
+.card-header {
+  background: $gradient-card-header;
+  border-bottom: 1px solid rgba($ltcl-gold, 0.22);
+  color: $theme-heading;
+  font-family: $font-heading;
+  font-weight: $font-weight-semibold;
+  letter-spacing: $letter-spacing-wide;
+  text-transform: uppercase;
+}
+
+.card-body {
+  background: transparent;
+  color: $theme-text;
+}
+
+.common-form-card {
+  border: 1px solid rgba($ltcl-gold, 0.28);
+  border-radius: $radius-2xl;
+  background: $gradient-form-card, $theme-surface-alpha-88;
+  box-shadow:
+    $shadow-card-lg,
+    $shadow-inset-highlight;
+  padding: 1.1rem;
+  color: $theme-text;
+  transition:
+    border-color $duration-md $ease-standard,
+    box-shadow $duration-md $ease-standard;
+
+  &:hover {
+    border-color: rgba($ltcl-gold, 0.48);
+  }
+
+  .custom-heading-theam {
+    margin-bottom: 0.85rem;
+    color: $theme-heading;
+    font-family: $font-heading;
+    font-weight: $font-weight-semibold;
+    letter-spacing: $letter-spacing-wide;
+    text-transform: uppercase;
+
+    .accent,
+    em,
+    span {
+      color: $theme-accent;
+      font-style: normal;
+    }
+  }
+}
+
+.custom-heading-theam {
+  color: $theme-heading;
+  font-family: $font-heading;
+  font-weight: $font-weight-semibold;
+  letter-spacing: $letter-spacing-wide;
+  text-transform: uppercase;
+
+  .accent,
+  em {
+    color: $theme-accent;
+    font-style: normal;
+  }
+}
+
+@media #{$xs} {
+  .common-form-card {
+    padding: 0.85rem;
+    border-radius: $radius-xl;
+  }
+}

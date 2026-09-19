@@ -1,0 +1,21 @@
+[general]
+host = "::"
+port = 3000
+root = "/public"
+log-level = "error"
+compression = true
+cache-control-headers = true
+page-fallback = "/public/index.html"
+security-headers = false
+
+[advanced]
+
+[[advanced.headers]]
+source = "**/*"
+[advanced.headers.headers]
+X-Content-Type-Options = "nosniff"
+X-Frame-Options = "DENY"
+Referrer-Policy = "strict-origin-when-cross-origin"
+Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+# Same-origin /api only (Caddy). Allow Google Fonts + YouTube embeds used by the app.
+Content-Security-Policy = "default-src 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none'; img-src 'self' data: https: blob:; font-src 'self' data: https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self'; connect-src 'self'; frame-src https://www.youtube.com https://www.youtube-nocookie.com; form-action 'self'"

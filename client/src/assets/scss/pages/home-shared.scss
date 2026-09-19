@@ -1,0 +1,255 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// =============================================================================
+// HOME PAGE — shared tokens, motion, section headers
+// =============================================================================
+
+@keyframes home-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes home-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes home-shimmer {
+  0% {
+    background-position: -200% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes home-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes home-pulse-glow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 $theme-alpha-35;
+  }
+  50% {
+    box-shadow: 0 0 24px 4px $theme-alpha-20;
+  }
+}
+
+@keyframes home-ken-burns {
+  from {
+    transform: scale(1.05);
+  }
+  to {
+    transform: scale(1.14);
+  }
+}
+
+@keyframes home-gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.home-page {
+  overflow-x: hidden;
+}
+
+.home-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition:
+    opacity $duration-reveal cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+    transform $duration-reveal cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
+
+  &.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.home-section-header {
+  margin-bottom: clamp(2rem, 5vw, 3.5rem);
+
+  &--center {
+    text-align: center;
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  &--left {
+    text-align: left;
+    max-width: 640px;
+  }
+
+  &__label {
+    display: inline-block;
+    font-family: $font-heading;
+    font-size: $font-size-md;
+    font-weight: $font-weight-semibold;
+    letter-spacing: $letter-spacing-eyebrow;
+    text-transform: uppercase;
+    color: $theme-accent;
+    margin-bottom: $spacing-md;
+    padding: $spacing-xs 0.95rem;
+    border: $border-width-thin solid rgba($ltcl-gold, 0.45);
+    border-radius: $radius-pill;
+    background: rgba($ltcl-gold, 0.1);
+  }
+
+  &__title {
+    font-family: $font-heading;
+    font-size: $font-size-section-title;
+    font-weight: $font-weight-bold;
+    line-height: $line-height-snug;
+    letter-spacing: $letter-spacing-wider;
+    text-transform: uppercase;
+    color: $theme-heading;
+    margin-bottom: $spacing-md;
+
+    .accent,
+    em,
+    strong {
+      color: $theme-accent;
+      font-style: normal;
+      font-weight: inherit;
+    }
+
+    span {
+      display: inline;
+      font-weight: inherit;
+      color: $theme-accent;
+    }
+
+    span.sub {
+      display: block;
+      font-weight: $font-weight-medium;
+      color: $theme-accent-bright;
+      font-size: 0.72em;
+      margin-top: 0.35em;
+      letter-spacing: $letter-spacing-wide;
+    }
+  }
+
+  &__desc {
+    font-size: clamp(0.95rem, 2vw, 1.05rem);
+    line-height: 1.75;
+    color: $theme-muted;
+    margin: 0;
+  }
+
+  &__line {
+    @include accent-cricket-divider;
+
+    .home-section-header--center & {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .home-section-header--left & {
+      margin-left: 0;
+      margin-right: auto;
+    }
+  }
+}
+
+.home-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  padding: $spacing-md $spacing-2xl;
+  font-family: $font-heading;
+  font-size: $font-size-base;
+  font-weight: $font-weight-semibold;
+  letter-spacing: $letter-spacing-wide;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: $radius-lg;
+  border: $border-width-thin solid transparent;
+  cursor: pointer;
+  @include transition(0.3s);
+
+  &--primary {
+    @include btn-primary-surface-plain;
+    border: $border-width-thin solid $btn-primary-border;
+
+    &:hover {
+      @include btn-primary-surface-plain-hover;
+      transform: translateY(-3px);
+      box-shadow: $btn-primary-shadow-hover;
+    }
+  }
+
+  &--outline {
+    @include btn-outline-surface;
+    background: rgba($ltcl-gold, 0.06);
+    border-color: $btn-outline-border;
+    color: $ltcl-champagne;
+
+    &:hover {
+      @include btn-outline-surface-hover;
+      transform: translateY(-3px);
+    }
+  }
+
+  &--ghost {
+    @include btn-ghost-surface;
+    backdrop-filter: blur(8px);
+    color: $ltcl-mist;
+
+    &:hover {
+      @include btn-ghost-surface-hover;
+      color: $theme-accent-bright;
+    }
+  }
+}
+
+.home-section-surface {
+  position: relative;
+  padding: clamp(3.5rem, 8vw, 6rem) 0;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.45;
+    background:
+      radial-gradient(
+        ellipse 60% 40% at 10% 20%,
+        $layout-bg-orb-glow 0%,
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 50% 35% at 90% 80%,
+        $btn-secondary-alpha-12 0%,
+        transparent 70%
+      );
+  }
+}

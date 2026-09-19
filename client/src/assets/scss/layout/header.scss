@@ -1,0 +1,372 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// -----------------------------------------------------------------------------
+// Site header — e-commerce style (executive gold / dark theme tokens)
+// -----------------------------------------------------------------------------
+
+.site-header {
+  --layout-header-height: 0px;
+  position: relative;
+  z-index: $z-header;
+}
+
+.site-header--offset {
+  padding-top: var(--layout-header-height);
+}
+
+.site-header__shell {
+  width: 100%;
+  max-width: $portal-content-max-width;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: $portal-content-pad-x;
+  padding-right: $portal-content-pad-x;
+}
+
+// Main bar (sticky target)
+.site-header__bar {
+  position: relative;
+  margin-bottom: $spacing-xl;
+  background: $layout-header-bg;
+  backdrop-filter: blur($header-blur);
+  -webkit-backdrop-filter: blur($header-blur);
+  border-bottom: 1px solid $theme-border;
+  box-shadow: $shadow-header-inset;
+}
+
+.site-header__bar--sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: $z-header;
+  background: $layout-header-bg-sticky;
+  box-shadow: $shadow-header-sticky;
+  @include transition($duration-slow);
+}
+
+.site-header__row {
+  display: grid;
+  grid-template-columns: minmax(56px, auto) 1fr auto;
+  align-items: center;
+  gap: clamp($spacing-sm, 2vw, $spacing-xl);
+  min-height: $header-bar-min-height;
+  padding-top: $spacing-sm;
+  padding-bottom: $spacing-sm;
+}
+
+// Logo
+.site-header__brand {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  min-width: $header-brand-size;
+  min-height: $header-brand-size;
+  border-radius: $radius-xl;
+  transition: box-shadow $duration-base $ease-standard;
+
+  &:hover {
+    box-shadow: 0 0 0 1px rgba($ltcl-gold, 0.45), $accent-glow;
+  }
+
+  .site-header__brand-text {
+    color: $theme-accent;
+    font-family: $font-display;
+    font-weight: $font-weight-normal;
+    font-size: $font-size-brand;
+    line-height: 1;
+    letter-spacing: $letter-spacing-wide;
+    text-transform: uppercase;
+  }
+
+  img {
+    display: block;
+    height: auto;
+    max-height: $header-brand-img;
+    width: $header-brand-img;
+    object-fit: contain;
+    border-radius: $radius-md;
+  }
+
+  .common-spinner {
+    min-height: $header-brand-size;
+    min-width: $header-brand-size;
+  }
+}
+
+// Navigation: drawer + hamburger below 1200px
+.site-header__nav {
+  justify-self: center;
+  max-width: 100%;
+  min-width: 0;
+  display: none;
+
+  @media #{$drawer-up} {
+    display: block;
+  }
+}
+
+.site-header__menu {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.site-header__item {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.site-header__menu > li {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.site-header__menu > li > a,
+.site-header__menu > li > .site-header__link,
+.site-header__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: $spacing-xs;
+  padding: $spacing-sm 0.55rem;
+  margin: 0;
+  font-family: $font-heading;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  letter-spacing: $letter-spacing-widest;
+  line-height: $line-height-heading;
+  white-space: nowrap;
+  text-transform: uppercase;
+  color: $layout-header-nav;
+  text-decoration: none;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  transition:
+    color $duration-base $ease-standard,
+    text-shadow $duration-base $ease-standard;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0.55rem;
+    right: 0.55rem;
+    bottom: 0.2rem;
+    height: 2px;
+    border-radius: $radius-pill;
+    background: $theme-accent;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform $duration-md $ease-standard;
+  }
+
+  &::before {
+    display: none;
+  }
+
+  &:hover {
+    color: $layout-header-nav-hover;
+    background: transparent;
+    box-shadow: none;
+    text-shadow: 0 0 18px rgba($ltcl-gold, 0.35);
+
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+
+  &.active {
+    color: $layout-header-nav-active;
+    background: transparent;
+    box-shadow: none;
+
+    &::after {
+      transform: scaleX(1);
+      background: $theme-accent-bright;
+    }
+  }
+
+  @media #{$xxl-up} {
+    padding: $spacing-sm $spacing-md;
+    font-size: $font-size-body;
+    letter-spacing: $letter-spacing-display;
+
+    &::after {
+      left: $spacing-md;
+      right: $spacing-md;
+    }
+  }
+}
+
+.site-header__chevron {
+  font-size: 0.5rem;
+  opacity: $opacity-soft;
+  margin-top: 1px;
+}
+
+.site-header__item--open .site-header__dropdown,
+.site-header__menu > li:hover .site-header__dropdown {
+  visibility: visible;
+  opacity: $opacity-full;
+  top: 100%;
+  transform: translateY(0);
+}
+
+.site-header__dropdown {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  left: 50%;
+  top: calc(100% + 6px);
+  transform: translate(-50%, -4px);
+  min-width: $header-dropdown-min-width;
+  width: max-content;
+  max-width: min($header-dropdown-max-width, 92vw);
+  margin: 0;
+  padding: 0.65rem 0;
+  list-style: none;
+  z-index: $z-dropdown;
+  background: linear-gradient(
+    165deg,
+    $surface-alpha-deep 0%,
+    $theme-bg-alpha-98 100%
+  );
+  border: 1px solid $theme-alpha-strong;
+  border-radius: 0 0 $radius-xl $radius-xl;
+  border-top: $border-width-thick solid $theme-primary;
+  box-shadow:
+    0 16px 40px $black-alpha-mid,
+    0 0 0 1px $theme-alpha-faint inset;
+  transition:
+    opacity 0.22s $ease-standard,
+    visibility 0.22s $ease-standard,
+    transform 0.22s $ease-standard;
+}
+
+.site-header__dropdown li {
+  margin: 0;
+}
+
+.site-header__dropdown-link {
+  display: flex;
+  align-items: flex-start;
+  gap: $spacing-md;
+  padding: $spacing-md 1.15rem;
+  margin: 0;
+  color: $theme-heading;
+  text-decoration: none;
+  transition:
+    background 0.18s $ease-standard,
+    color 0.18s $ease-standard;
+
+  &::before {
+    display: none;
+  }
+
+  &:hover,
+  &.active {
+    background: $theme-alpha-soft;
+    color: $theme-accent-bright;
+  }
+
+  &.active {
+    font-weight: $font-weight-semibold;
+  }
+}
+
+.site-header__dropdown-link--media .site-header__dropdown-icon {
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.1rem;
+}
+
+.site-header__dropdown-text {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3xs;
+  min-width: 0;
+}
+
+.site-header__dropdown-label {
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-lg;
+  line-height: 1.25;
+}
+
+.site-header__dropdown-desc {
+  font-size: $font-size-body;
+  color: $theme-muted;
+  line-height: $line-height-base;
+}
+
+// Actions column
+.site-header__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: $spacing-sm;
+  min-width: 0;
+}
+
+.site-header__menu-toggle.btn--outline {
+  @media #{$drawer-up} {
+    display: none;
+  }
+}
+
+.site-header__auth.btn-group-inline {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+// Desktop+: show labels beside icons (unlock fixed icon square from btn--icon)
+@media #{$sm-up} {
+  .site-header__auth .btn.btn--sm.btn--icon {
+    width: auto;
+    min-width: 0;
+    height: auto;
+    min-height: $btn-min-height-sm;
+    padding: $spacing-xs $spacing-md;
+    gap: 0.3rem;
+  }
+}
+
+.site-header__auth-label {
+  @media #{$sm-down} {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+  }
+}
+
+@media #{$sm-down} {
+  .site-header__row {
+    grid-template-columns: minmax(56px, auto) 1fr auto;
+    min-height: $header-bar-min-height-compact;
+  }
+
+  .site-header__brand img {
+    max-height: $header-brand-img-mobile;
+    width: $header-brand-img-mobile;
+  }
+}

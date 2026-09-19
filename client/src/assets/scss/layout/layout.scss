@@ -1,0 +1,160 @@
+@use "../variables" as *;
+
+:root,
+[data-bs-theme="light"] {
+  --bs-primary: #{$theme-primary};
+  --bs-primary-rgb: #{$bs-primary-rgb};
+  --bs-secondary: #{$theme-secondary};
+  --bs-secondary-rgb: #{$bs-secondary-rgb};
+  --bs-success: #{$theme-success};
+  --bs-success-rgb: #{$bs-success-rgb};
+  --bs-info: #{$theme-secondary};
+  --bs-warning: #{$theme-warning};
+  --bs-warning-rgb: #{$bs-warning-rgb};
+  --bs-danger: #{$theme-danger};
+  --bs-danger-rgb: #{$bs-danger-rgb};
+  --bs-light: #{$theme-bg-light};
+  --bs-body-bg: #{$theme-bg};
+  --bs-body-bg-rgb: #{$bs-body-bg-rgb};
+  --bs-body-color: #{$theme-text};
+  --bs-body-color-rgb: #{$bs-body-color-rgb};
+  --bs-border-color: #{$theme-border};
+  --bs-link-color: #{$theme-primary};
+  --bs-link-hover-color: #{$theme-secondary};
+  --bs-emphasis-color: #{$theme-heading};
+  --bs-secondary-color: #{$theme-muted};
+  --bs-tertiary-color: #{$theme-muted};
+  --bs-heading-color: #{$theme-heading};
+}
+
+body {
+  font-size: $font-size-root;
+  line-height: $line-height-body;
+  font-weight: $font-weight-normal;
+  font-style: normal;
+  color: $theme-text;
+  background:
+    radial-gradient(circle at 18% 8%, rgba($ltcl-gold, 0.08), transparent 42%),
+    radial-gradient(circle at 82% 18%, $layout-bg-orb-glow, transparent 45%),
+    radial-gradient(circle at 70% 88%, rgba($ltcl-teal, 0.1), transparent 40%),
+    linear-gradient(
+      180deg,
+      $layout-bg-gradient-start 0%,
+      $layout-bg-gradient-end 100%
+    );
+  min-height: 100vh;
+  font-family: $futurabook;
+  -webkit-font-smoothing: antialiased;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+// Align all Bootstrap Containers with the header shell (prevents route-change width blink)
+.container {
+  max-width: $portal-content-max-width !important;
+  padding-left: $portal-content-pad-x;
+  padding-right: $portal-content-pad-x;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $font-heading;
+  color: $theme-heading;
+  letter-spacing: $letter-spacing-wide;
+  line-height: $line-height-heading;
+  font-weight: $font-weight-semibold;
+}
+
+h1 {
+  font-size: $font-size-h1;
+}
+
+h2 {
+  font-size: $font-size-h2;
+}
+
+h3 {
+  font-size: $font-size-h3;
+}
+
+h4 {
+  font-size: $font-size-h4;
+}
+
+h5 {
+  font-size: $font-size-h5;
+}
+
+h6 {
+  font-size: $font-size-h6;
+}
+
+h1,
+h2 {
+  text-transform: uppercase;
+  letter-spacing: $letter-spacing-wider;
+}
+
+h1 .accent,
+h2 .accent,
+h3 .accent,
+h1 em,
+h2 em,
+.heading-accent {
+  color: $theme-accent;
+  font-style: normal;
+}
+
+a {
+  color: $theme-accent;
+  transition: color $duration-base $ease-standard;
+
+  &:hover,
+  &:focus {
+    color: $theme-accent-bright;
+  }
+}
+
+a:focus {
+  text-decoration: none;
+  outline: none;
+}
+
+a:focus,
+a:hover {
+  text-decoration: none;
+}
+
+a,
+button {
+  text-decoration: none;
+  outline: medium none;
+}
+
+button:focus,
+input:focus,
+textarea,
+textarea:focus {
+  outline: 0;
+}
+
+// Portal authenticated shell — prevent mobile horizontal overflow / dead space
+.portal-shell {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+  min-height: 100dvh;
+}
+
+.portal-shell__main {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: clip;
+}

@@ -1,0 +1,205 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// =============================================================================
+// HOME PROCESS SECTION — number + dashed flow (no icons)
+// Desktop: max 5 per row · Mobile: vertical timeline
+// =============================================================================
+
+.home-process {
+  background: linear-gradient(
+    180deg,
+    $theme-bg 0%,
+    $theme-bg-alpha-60 50%,
+    $theme-bg 100%
+  );
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  &__steps {
+    list-style: none;
+    margin: $spacing-lg auto 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+    grid-template-columns: 1fr;
+    max-width: 560px;
+
+    @media #{$md-up} {
+      max-width: none;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 0;
+      row-gap: clamp(2.75rem, 5vw, 3.75rem);
+    }
+
+    @media #{$process-wide} {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+
+      &[data-step-count="1"] {
+        grid-template-columns: minmax(220px, 320px);
+        justify-content: center;
+      }
+
+      &[data-step-count="2"] {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        max-width: 640px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      &[data-step-count="3"] {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      &[data-step-count="4"] {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+  }
+
+  &__step {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    min-width: 0;
+    padding: 0 0 $spacing-2xs;
+
+    @media #{$md-up} {
+      flex-direction: column;
+      align-items: center;
+      padding: 0 0.65rem;
+      text-align: center;
+    }
+
+    @media #{$process-wide} {
+      padding: 0 $spacing-sm;
+    }
+  }
+
+  &__marker {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    width: $spacing-6xl;
+
+    @media #{$md-up} {
+      flex-direction: row;
+      justify-content: center;
+      width: 100%;
+      margin-bottom: $spacing-xl;
+    }
+  }
+
+  &__number {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: $spacing-6xl;
+    height: $spacing-6xl;
+    flex-shrink: 0;
+    border-radius: $radius-circle;
+    border: $border-width-thin solid $theme-alpha-mid;
+    background: $theme-surface;
+    box-shadow: 0 8px 24px $theme-alpha-10;
+    font-size: 0.8rem;
+    font-weight: $font-weight-extrabold;
+    letter-spacing: $letter-spacing-wider;
+    color: $theme-primary;
+    @include transition($duration-slow);
+
+    .home-process__step:hover & {
+      border-color: $theme-alpha-strong;
+      background-color: $btn-primary-bg;
+      background-image: $btn-primary-bg-image;
+      color: $btn-primary-color;
+      box-shadow: $btn-primary-shadow-hover;
+      transform: scale(1.06);
+    }
+  }
+
+  // Dashed connector between steps
+  &__connector {
+    pointer-events: none;
+    z-index: 1;
+
+    // Mobile: vertical dashed line under the number
+    @media #{$xs} {
+      flex: 1 1 auto;
+      width: 0;
+      min-height: 1.75rem;
+      margin-top: 0.4rem;
+      border-left: 1.5px dashed $theme-alpha-mid;
+    }
+
+    // Tablet / desktop: horizontal dashed line to next step
+    @media #{$md-up} {
+      position: absolute;
+      left: calc(50% + 1.65rem);
+      right: calc(-50% + 1.65rem);
+      top: 50%;
+      height: 0;
+      flex: none;
+      margin: 0;
+      border-left: none;
+      border-top: 1.5px dashed $theme-alpha-mid;
+    }
+  }
+
+  // Hide end-of-row horizontal connectors on wrap layouts
+  @media #{$process-mid} {
+    &__steps > .home-process__step:nth-child(2n) .home-process__connector {
+      display: none;
+    }
+  }
+
+  @media #{$process-wide} {
+    &__steps[data-step-count="6"] > .home-process__step:nth-child(5) .home-process__connector,
+    &__steps[data-step-count="7"] > .home-process__step:nth-child(5) .home-process__connector,
+    &__steps[data-step-count="8"] > .home-process__step:nth-child(5) .home-process__connector,
+    &__steps[data-step-count="9"] > .home-process__step:nth-child(5) .home-process__connector,
+    &__steps[data-step-count="10"] > .home-process__step:nth-child(5) .home-process__connector {
+      display: none;
+    }
+  }
+
+  &__body {
+    min-width: 0;
+    flex: 1;
+    padding: $spacing-xs 0 $spacing-2xl $spacing-lg;
+
+    @media #{$md-up} {
+      padding: 0;
+    }
+  }
+
+  &__title {
+    font-size: clamp(1rem, 1.4vw, 1.12rem);
+    font-weight: $font-weight-bold;
+    color: $theme-heading;
+    margin: 0 0 $spacing-sm;
+    line-height: $line-height-base;
+    @include transition(0.3s);
+
+    .home-process__step:hover & {
+      color: $theme-primary;
+    }
+  }
+
+  &__desc {
+    font-size: $font-size-base;
+    line-height: $line-height-loose;
+    color: $theme-muted;
+    margin: 0;
+  }
+}

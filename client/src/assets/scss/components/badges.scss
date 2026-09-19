@@ -1,0 +1,38 @@
+@use "../variables" as *;
+
+.badge {
+  padding: 0.375rem $spacing-md;
+  border-radius: $radius-sm;
+  font-family: $font-heading;
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-md;
+  letter-spacing: $letter-spacing-wide;
+  text-transform: uppercase;
+}
+
+.bg-warning,
+.badge.bg-warning {
+  background: rgba($ltcl-gold, 0.18) !important;
+  color: $theme-accent-bright !important;
+  border: 1px solid rgba($ltcl-gold, 0.4);
+}
+
+.bg-primary,
+.badge.bg-primary {
+  background: $gradient-nav-active !important;
+  color: $theme-text-on-primary !important;
+}
+
+.bg-info,
+.badge.bg-info {
+  background: rgba($ltcl-sky, 0.18) !important;
+  color: $theme-sky !important;
+  border: 1px solid rgba($ltcl-sky, 0.35);
+}
+
+.bg-success,
+.badge.bg-success {
+  background: rgba($ltcl-teal, 0.18) !important;
+  color: $theme-accent-alt !important;
+  border: 1px solid rgba($ltcl-teal, 0.35);
+}

@@ -1,0 +1,19 @@
+# syntax=docker/dockerfile:1
+
+FROM node:24-alpine AS builder
+WORKDIR /tt-admin
+
+COPY ./admin/package.json ./admin/package-lock.json ./
+RUN npm ci && npm cache clean --force
+
+COPY ./admin .
+ARG VITE_APP_SERVER_URL
+ENV VITE_APP_SERVER_URL=${VITE_APP_SERVER_URL}
+RUN npm run build
+
+# ~5–10MB scratch image instead of nginx:alpine (~50MB+)
+FROM joseluisq/static-web-server:2
+COPY --from=builder /tt-admin/dist /public
+COPY ./admin/sws.toml /home/sws/config.toml
+ENV SERVER_CONFIG_FILE=/home/sws/config.toml
+EXPOSE 3001

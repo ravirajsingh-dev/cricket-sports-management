@@ -1,0 +1,384 @@
+@use "sass:color";
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// =============================================================================
+// HOME FAQ — mobile-first accordion with smooth expand motion
+// =============================================================================
+
+$faq-ease: cubic-bezier(0.22, 1, 0.36, 1);
+$faq-duration: 0.45s;
+
+@keyframes home-faq-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+@keyframes home-faq-index-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.home-faq {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse 70% 45% at 50% 0%,
+      rgba($ltcl-blue, 0.16),
+      transparent 70%
+    ),
+    $theme-surface-alt;
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .home-section-header {
+    margin-bottom: clamp(1.5rem, 4vw, 2.75rem);
+  }
+
+  .home-section-header__title {
+    font-size: clamp(1.35rem, 5.2vw, 1.85rem);
+    line-height: 1.2;
+    word-break: break-word;
+  }
+
+  .home-section-header__desc {
+    max-width: 36rem;
+    margin-inline: auto;
+    font-size: clamp(0.88rem, 2.4vw, 1.02rem);
+    padding-inline: 0.25rem;
+  }
+
+  &__glow {
+    position: absolute;
+    inset: auto 8% -18% 8%;
+    height: 42%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba($ltcl-gold, 0.1),
+      transparent 70%
+    );
+    pointer-events: none;
+    animation: home-faq-glow-pulse 7s ease-in-out infinite;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.7rem, 2vw, 0.95rem);
+    max-width: min(52rem, 100%);
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  &__reveal {
+    width: 100%;
+  }
+
+  &__item {
+    position: relative;
+    isolation: isolate;
+    border-radius: clamp(0.85rem, 2.5vw, 1.15rem);
+    border: $border-width-thin solid rgba($ltcl-gold, 0.28);
+    background: linear-gradient(
+      160deg,
+      rgba($ltcl-navy-panel, 0.96),
+      rgba($ltcl-navy-card, 0.92) 55%,
+      rgba($ltcl-navy, 0.94)
+    );
+    box-shadow:
+      0 10px 28px rgba($black, 0.22),
+      inset 0 1px 0 rgba($ltcl-gold, 0.06);
+    overflow: hidden;
+    transition:
+      border-color $faq-duration $faq-ease,
+      box-shadow $faq-duration $faq-ease,
+      transform $faq-duration $faq-ease;
+
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(
+        180deg,
+        rgba($ltcl-gold-bright, 0.15),
+        rgba($ltcl-gold, 0.05)
+      );
+      transition:
+        background $faq-duration $faq-ease,
+        box-shadow $faq-duration $faq-ease;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    &:hover {
+      border-color: rgba($ltcl-gold, 0.42);
+    }
+
+    &.is-open {
+      border-color: rgba($ltcl-gold, 0.58);
+      box-shadow:
+        0 16px 40px rgba($black, 0.28),
+        0 0 0 1px rgba($ltcl-gold, 0.08),
+        inset 0 1px 0 rgba($ltcl-gold, 0.12);
+
+      &::before {
+        background: linear-gradient(
+          180deg,
+          $ltcl-gold-bright,
+          $ltcl-gold,
+          rgba($ltcl-gold-deep, 0.75)
+        );
+        box-shadow: 0 0 16px rgba($ltcl-gold, 0.45);
+      }
+
+      .home-faq__trigger {
+        background: linear-gradient(
+          135deg,
+          rgba($ltcl-navy-panel, 0.98),
+          color.mix($ltcl-navy-panel, $ltcl-blue, 68%)
+        );
+      }
+
+      .home-faq__index {
+        color: $ltcl-navy;
+        background: linear-gradient(
+          145deg,
+          $ltcl-gold-bright,
+          $ltcl-gold 55%,
+          $ltcl-gold-deep
+        );
+        border-color: transparent;
+        box-shadow: 0 4px 14px rgba($ltcl-gold, 0.35);
+      }
+
+      .home-faq__icon {
+        background: rgba($ltcl-navy, 0.55);
+        border-color: rgba($ltcl-gold, 0.55);
+        color: $ltcl-gold-bright;
+        transform: rotate(180deg);
+        box-shadow: 0 0 12px rgba($ltcl-gold, 0.25);
+      }
+
+      .home-faq__answer {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  }
+
+  &__question {
+    margin: 0;
+    font-size: inherit;
+    font-weight: inherit;
+  }
+
+  &__trigger {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: clamp(0.65rem, 2.2vw, 0.95rem);
+    padding: clamp(0.9rem, 3vw, 1.2rem) clamp(0.85rem, 2.8vw, 1.2rem);
+    margin: 0;
+    border: 0;
+    background: transparent;
+    color: $ltcl-silk;
+    text-align: left;
+    cursor: pointer;
+    min-height: 3.25rem;
+    transition: background $faq-duration $faq-ease;
+
+    &:hover,
+    &:focus-visible {
+      outline: none;
+    }
+
+    &:focus-visible {
+      box-shadow: inset 0 0 0 2px rgba($ltcl-gold, 0.55);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        background: rgba($ltcl-navy-panel, 0.55);
+      }
+    }
+  }
+
+  &__index {
+    flex-shrink: 0;
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: $radius-md;
+    border: 1px solid rgba($ltcl-gold, 0.35);
+    background: rgba($ltcl-navy, 0.45);
+    color: $ltcl-gold;
+    font-family: $font-heading;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    transition:
+      color $faq-duration $faq-ease,
+      background $faq-duration $faq-ease,
+      border-color $faq-duration $faq-ease,
+      box-shadow $faq-duration $faq-ease;
+
+    @media #{$md-up} {
+      width: 2.25rem;
+      height: 2.25rem;
+      font-size: 0.78rem;
+    }
+  }
+
+  &__question-text {
+    flex: 1;
+    min-width: 0;
+    font-family: $font-heading;
+    font-size: clamp(0.92rem, 2.8vw, 1.12rem);
+    font-weight: 600;
+    line-height: 1.35;
+    letter-spacing: 0.015em;
+    color: $ltcl-silk;
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    width: 2.25rem;
+    height: 2.25rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid rgba($ltcl-gold, 0.35);
+    background: rgba($ltcl-navy, 0.4);
+    color: $ltcl-gold;
+    font-size: 0.72rem;
+    transition:
+      transform $faq-duration $faq-ease,
+      background $faq-duration $faq-ease,
+      border-color $faq-duration $faq-ease,
+      color $faq-duration $faq-ease,
+      box-shadow $faq-duration $faq-ease;
+
+    svg {
+      display: block;
+    }
+
+    @media #{$md-up} {
+      width: 2.4rem;
+      height: 2.4rem;
+      font-size: 0.78rem;
+    }
+  }
+
+  // Smooth height animation via grid (works on mobile + desktop)
+  &__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows $faq-duration $faq-ease;
+
+    &.is-open {
+      grid-template-rows: 1fr;
+    }
+  }
+
+  &__panel-inner {
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  &__answer {
+    margin: 0 clamp(0.85rem, 2.8vw, 1.2rem) clamp(0.9rem, 2.8vw, 1.2rem);
+    padding: clamp(0.85rem, 2.6vw, 1.1rem) clamp(0.9rem, 2.6vw, 1.15rem);
+    border-radius: clamp(0.65rem, 2vw, 0.85rem);
+    border: $border-width-thin solid rgba($ltcl-gold, 0.14);
+    background: rgba($ltcl-navy, 0.42);
+    opacity: 0;
+    transform: translateY(-8px);
+    transition:
+      opacity calc(#{$faq-duration} * 0.85) $faq-ease,
+      transform calc(#{$faq-duration} * 0.85) $faq-ease;
+
+    .home-faq__item.is-open & {
+      transition-delay: 0.08s;
+    }
+
+    p {
+      margin: 0;
+      font-size: clamp(0.88rem, 2.5vw, 1rem);
+      line-height: 1.7;
+      color: $ltcl-mist;
+
+      + p {
+        margin-top: 0.7rem;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-faq {
+    &__glow {
+      animation: none;
+    }
+
+    &__item,
+    &__trigger,
+    &__index,
+    &__icon,
+    &__panel,
+    &__answer {
+      transition: none !important;
+    }
+
+    &__item.is-open .home-faq__icon {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+@media #{$xs-down} {
+  .home-faq {
+    &__trigger {
+      gap: 0.6rem;
+      padding: 0.85rem 0.8rem;
+    }
+
+    &__index {
+      width: 1.85rem;
+      height: 1.85rem;
+      font-size: 0.68rem;
+      border-radius: $radius-sm;
+    }
+
+    &__icon {
+      width: 2.1rem;
+      height: 2.1rem;
+    }
+
+    &__question-text {
+      font-size: 0.92rem;
+    }
+  }
+}

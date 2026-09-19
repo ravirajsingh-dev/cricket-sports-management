@@ -1,0 +1,330 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// =============================================================================
+// HOME OFFICIAL TEAMS — 5-up pools, leftover rows stretch full width
+// =============================================================================
+
+$teams-cols: 5;
+
+@keyframes home-teams-logo-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes home-teams-ring-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 1px rgba($ltcl-gold, 0.35),
+      0 0 14px rgba($ltcl-gold, 0.14);
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px rgba($ltcl-gold-bright, 0.6),
+      0 0 24px rgba($ltcl-gold, 0.28);
+  }
+}
+
+@keyframes home-teams-pool-glow {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes home-teams-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes home-teams-border-move {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.home-teams {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(1.75rem, 3.5vw, 2.75rem);
+  background:
+    radial-gradient(
+      ellipse 80% 55% at 50% 0%,
+      rgba($ltcl-blue, 0.18),
+      transparent 70%
+    ),
+    $theme-bg;
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .home-section-header {
+    margin-bottom: clamp(0.75rem, 2vw, 1.25rem);
+  }
+
+  .home-section-header__desc {
+    font-size: clamp(0.8rem, 1.5vw, 0.95rem);
+    max-width: 36rem;
+  }
+
+  &__glow {
+    position: absolute;
+    inset: auto 10% -20% 10%;
+    height: 45%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba($ltcl-gold, 0.08),
+      transparent 70%
+    );
+    pointer-events: none;
+    animation: home-teams-pool-glow 6s ease-in-out infinite;
+  }
+
+  &__pools {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.85rem, 1.8vw, 1.25rem);
+    margin-top: 0;
+  }
+
+  &__pool {
+    position: relative;
+    padding: clamp(0.85rem, 1.8vw, 1.35rem) clamp(0.75rem, 1.6vw, 1.25rem);
+    border-radius: $radius-2xl;
+    border: $border-width-thin solid rgba($ltcl-gold, 0.28);
+    background: linear-gradient(
+      155deg,
+      rgba($ltcl-navy-panel, 0.97),
+      rgba($ltcl-navy-card, 0.9) 55%,
+      rgba($ltcl-navy, 0.92)
+    );
+    box-shadow:
+      0 12px 32px rgba($black, 0.3),
+      inset 0 1px 0 rgba($ltcl-gold, 0.08);
+    overflow: hidden;
+    @include transition($duration-slow);
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(
+        ellipse 60% 80% at 50% -10%,
+        rgba($ltcl-gold, 0.1),
+        transparent 65%
+      );
+      pointer-events: none;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(
+        120deg,
+        rgba($ltcl-gold, 0.12),
+        rgba($ltcl-gold-bright, 0.65),
+        rgba($ltcl-blue, 0.4),
+        rgba($ltcl-gold, 0.5),
+        rgba($ltcl-gold, 0.12)
+      );
+      background-size: 200% 100%;
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0.7;
+    }
+
+    &.is-visible::after {
+      animation: home-teams-border-move 7s linear infinite;
+    }
+
+    &:hover {
+      border-color: rgba($ltcl-gold, 0.42);
+      box-shadow:
+        0 16px 40px rgba($black, 0.36),
+        0 0 28px rgba($ltcl-gold, 0.1),
+        inset 0 1px 0 rgba($ltcl-gold, 0.12);
+    }
+  }
+
+  &__pool-head {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.65rem;
+    margin-bottom: clamp(0.75rem, 1.6vw, 1.15rem);
+  }
+
+  &__pool-rule {
+    flex: 1;
+    max-width: 5.5rem;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba($ltcl-gold, 0.7),
+      transparent
+    );
+  }
+
+  &__pool-title {
+    margin: 0;
+    font-family: $font-display;
+    font-size: clamp(1.05rem, 2.4vw, 1.55rem);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: $ltcl-gold-bright;
+    white-space: nowrap;
+    text-shadow: 0 0 24px rgba($ltcl-gold, 0.25);
+  }
+
+  // 5 columns on every breakpoint; leftover row items flex to fill the row
+  &__grid {
+    --teams-cols: #{$teams-cols};
+    --teams-gap: clamp(0.4rem, 1.2vw, 0.85rem);
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--teams-gap);
+  }
+
+  &__card {
+    --team-basis: calc(
+      (100% - (var(--teams-cols) - 1) * var(--teams-gap)) / var(--teams-cols)
+    );
+    flex: 1 1 var(--team-basis);
+    min-width: var(--team-basis);
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.4rem;
+    opacity: 0;
+    @include transition($duration-base);
+
+    .home-reveal.is-visible & {
+      animation: home-teams-logo-in 0.55s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: var(--team-delay, 0ms);
+    }
+
+    &:hover {
+      .home-teams__name {
+        color: $ltcl-gold-bright;
+      }
+    }
+  }
+
+  &__logo-wrap {
+    position: relative;
+    width: clamp(2.65rem, 12vw, 4.75rem);
+    height: clamp(2.65rem, 12vw, 4.75rem);
+    border-radius: 50%;
+    @include transition($duration-slow);
+
+    &::after {
+      content: "";
+      position: absolute;
+      inset: -3px;
+      border-radius: 50%;
+      background: conic-gradient(
+        from 180deg,
+        transparent 40%,
+        rgba($ltcl-gold, 0.45),
+        transparent 60%
+      );
+      opacity: 0;
+      @include transition($duration-slow);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    &:hover {
+      transform: translateY(-4px) scale(1.06);
+
+      &::after {
+        opacity: 1;
+        animation: home-teams-spin 2.8s linear infinite;
+      }
+
+      .home-teams__logo-ring {
+        animation: home-teams-ring-pulse 1.5s ease-in-out infinite;
+      }
+    }
+  }
+
+  &__logo-ring {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: 50%;
+    border: 1.5px solid rgba($ltcl-gold, 0.55);
+    box-shadow:
+      0 0 0 1px rgba($ltcl-gold, 0.22),
+      0 0 14px rgba($ltcl-gold, 0.12),
+      inset 0 0 12px rgba($ltcl-navy, 0.35);
+    pointer-events: none;
+  }
+
+  &__logo {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    background: $ltcl-navy;
+    border: 2px solid rgba($ltcl-navy-panel, 0.9);
+    @include transition($duration-base);
+  }
+
+  &__name {
+    margin: 0;
+    max-width: 100%;
+    padding-inline: 0.1rem;
+    font-family: $font-heading;
+    font-size: clamp(0.5rem, 2.4vw, 0.78rem);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: $ltcl-silk;
+    line-height: 1.2;
+    @include transition($duration-base);
+    white-space: normal;
+    word-break: keep-all;
+    overflow-wrap: break-word;
+    hyphens: none;
+
+    @media #{$md-up} {
+      letter-spacing: 0.05em;
+    }
+  }
+}

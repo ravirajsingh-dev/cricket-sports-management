@@ -1,0 +1,182 @@
+@use "../variables" as *;
+
+// ============================================
+// LOADERS
+// ============================================
+
+.bouncing-loader-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--loader-min-height, #{$loader-fallback-min-height});
+}
+
+.bouncing-loader-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: var(--loader-min-height, #{$loader-fallback-min-height});
+}
+
+.bouncing-loader-message {
+  margin: $spacing-md 0 0;
+  color: $theme-muted;
+  font-size: $font-size-md-plus;
+  text-align: center;
+}
+
+.bouncing-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-xl 0;
+
+  > div {
+    width: $loader-dot-size;
+    height: $loader-dot-size;
+    margin: 0;
+    border-radius: $radius-circle;
+    background-color: $theme-primary;
+    opacity: 1;
+    animation: bouncing-loader 0.6s infinite alternate;
+  }
+}
+
+@keyframes bouncing-loader {
+  to {
+    opacity: 0.3;
+    transform: translateY(calc(-1 * #{$loader-dot-size}));
+  }
+}
+
+.bouncing-loader > div:nth-child(2) {
+  animation-delay: $duration-base;
+}
+
+.bouncing-loader > div:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.common-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  width: 100%;
+  height: 100%;
+  min-height: $btn-min-height-md;
+
+  &--sm .common-spinner__ring {
+    width: $spinner-size-sm;
+    height: $spinner-size-sm;
+    border-width: $border-width-md;
+  }
+
+  &--md .common-spinner__ring {
+    width: $spinner-size-md;
+    height: $spinner-size-md;
+    border-width: 2.5px;
+  }
+
+  &--lg .common-spinner__ring {
+    width: $spinner-size-lg;
+    height: $spinner-size-lg;
+    border-width: $border-width-thick;
+  }
+}
+
+.common-spinner__ring {
+  display: inline-block;
+  border-style: solid;
+  border-color: $theme-alpha-55;
+  border-top-color: $theme-primary;
+  border-right-color: $theme-alpha-70;
+  border-radius: $radius-circle;
+  filter: drop-shadow(0 0 8px $theme-alpha-35);
+  animation: common-spinner-rotate 0.9s linear infinite;
+}
+
+.common-spinner__message {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: $font-weight-medium;
+  color: $theme-alpha-88;
+  line-height: $line-height-heading;
+  text-align: center;
+}
+
+.common-spinner--button {
+  display: inline-flex;
+  flex-direction: row;
+  min-height: 0;
+  width: auto;
+  height: auto;
+  vertical-align: middle;
+}
+
+@keyframes common-spinner-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Themed section / form skeleton — matches admin table shimmer rows
+.table-loading-skeleton {
+  width: 100%;
+  background: $placeholder-row-bg;
+  overflow: hidden;
+  border-radius: $radius-md;
+}
+
+.table-loading-skeleton__row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(4.5rem, 1fr));
+  gap: $spacing-lg;
+  align-items: center;
+  min-height: $table-skeleton-row-min-height;
+  padding: 0.85rem $spacing-lg;
+  background: $placeholder-row-bg;
+  border-bottom: 1px solid $theme-alpha-10;
+
+  &--alt {
+    background: $placeholder-row-bg-alt;
+  }
+}
+
+.table-loading-skeleton__bar {
+  display: block !important;
+  width: 100%;
+  max-width: 9.5rem;
+  height: $table-skeleton-bar-height;
+  min-height: $table-skeleton-bar-height !important;
+  margin: 0;
+}
+
+.form-field-skeleton {
+  width: 100%;
+
+  &__bar {
+    display: block !important;
+    width: 100%;
+    max-width: none;
+    border-radius: $radius-sm;
+    margin: 0;
+
+    &--field {
+      height: $table-skeleton-bar-height;
+      min-height: $table-skeleton-bar-height !important;
+      margin-top: calc(($form-field-height - $table-skeleton-bar-height) / 2);
+      margin-bottom: calc(($form-field-height - $table-skeleton-bar-height) / 2);
+    }
+
+    &--textarea {
+      height: 5.5rem;
+      min-height: 5.5rem !important;
+    }
+  }
+}

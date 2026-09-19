@@ -1,0 +1,32 @@
+@use "./variables" as *;
+
+.nav-tabs .nav-link {
+  font-family: $font-heading;
+  letter-spacing: $letter-spacing-wide;
+  text-transform: uppercase;
+  color: $theme-muted;
+
+  &:hover {
+    color: $theme-accent-bright;
+    border-color: rgba($ltcl-gold, 0.4);
+  }
+
+  &.active {
+    color: $theme-text-on-primary;
+    background: $gradient-nav-active;
+    border-color: $ltcl-gold-deep;
+    box-shadow: 0 6px 18px rgba($ltcl-gold, 0.25);
+  }
+}
+
+.alert-warning {
+  background: $theme-warning-alpha-12;
+  border-color: $theme-warning-alpha-28;
+  color: $theme-highlight;
+}
+
+.alert-danger {
+  background: $theme-danger-alpha-12;
+  border-color: $theme-danger-alpha-28;
+  color: $ltcl-champagne;
+}

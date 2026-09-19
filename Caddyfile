@@ -1,0 +1,33 @@
+api.example.com {
+  reverse_proxy server:5000 {
+    header_down Strict-Transport-Security max-age=31536000;
+  }
+}
+
+example.com, www.example.com {
+  handle /api/* {
+    reverse_proxy server:5000 {
+      header_down Strict-Transport-Security max-age=31536000;
+    }
+  }
+
+  handle {
+    reverse_proxy client:3000 {
+      header_down Strict-Transport-Security max-age=31536000;
+    }
+  }
+}
+
+admin.example.com {
+  handle /api/* {
+    reverse_proxy server:5000 {
+      header_down Strict-Transport-Security max-age=31536000;
+    }
+  }
+
+  handle {
+    reverse_proxy admin:3001 {
+      header_down Strict-Transport-Security max-age=31536000;
+    }
+  }
+}

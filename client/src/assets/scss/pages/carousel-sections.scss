@@ -1,0 +1,315 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// =============================================================================
+// HOME CAROUSEL — equal-size cards on every breakpoint
+// =============================================================================
+
+@keyframes home-carousel-marquee-ltr {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes home-carousel-marquee-rtl {
+  from {
+    transform: translate3d(-50%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.home-carousel {
+  --carousel-card-w: 150px;
+  --carousel-card-h: 168px;
+  --carousel-gap: 0.65rem;
+
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 50% 0%,
+      rgba($ltcl-blue, 0.22),
+      transparent 68%
+    ),
+    $theme-bg;
+  padding-block: clamp(1.15rem, 2.8vw, 2.1rem);
+
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .home-section-header {
+    margin-bottom: clamp(0.75rem, 2vw, 1.35rem);
+  }
+
+  &__glow {
+    position: absolute;
+    inset: auto 5% -25% 5%;
+    height: 50%;
+    background: radial-gradient(
+      ellipse at center,
+      rgba($ltcl-gold, 0.1),
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  &__viewport {
+    margin-top: 0.15rem;
+    overflow: hidden;
+    width: 100%;
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      #000 2%,
+      #000 98%,
+      transparent 100%
+    );
+  }
+
+  &__track {
+    display: flex;
+    width: max-content;
+    will-change: transform;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-duration: var(--carousel-duration, 24s);
+
+    &--ltr {
+      animation-name: home-carousel-marquee-ltr;
+    }
+
+    &--rtl {
+      animation-name: home-carousel-marquee-rtl;
+    }
+
+    &:hover,
+    &:focus-within {
+      animation-play-state: paused;
+    }
+  }
+
+  &__group {
+    display: flex;
+    flex-shrink: 0;
+    align-items: stretch;
+    gap: var(--carousel-gap);
+    padding-right: var(--carousel-gap);
+  }
+
+  // ALL cards same fixed width + height
+  &__card {
+    box-sizing: border-box;
+    flex: 0 0 var(--carousel-card-w);
+    width: var(--carousel-card-w);
+    height: var(--carousel-card-h);
+    min-height: var(--carousel-card-h);
+    max-height: var(--carousel-card-h);
+    display: flex;
+    flex-direction: column;
+    border-radius: $radius-lg;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    border: $border-width-thin solid rgba($ltcl-gold, 0.3);
+    background:
+      radial-gradient(
+        ellipse at 50% 20%,
+        rgba($ltcl-blue, 0.28),
+        transparent 65%
+      ),
+      linear-gradient(
+        165deg,
+        rgba($ltcl-navy-panel, 0.98),
+        rgba($ltcl-navy-card, 0.96)
+      );
+    box-shadow: 0 8px 20px rgba($black, 0.32);
+    transition:
+      transform 0.22s ease,
+      border-color 0.22s ease,
+      box-shadow 0.22s ease;
+
+    &:hover,
+    &:focus-visible {
+      transform: translateY(-2px);
+      border-color: rgba($ltcl-gold-bright, 0.55);
+      box-shadow: 0 12px 26px rgba($black, 0.4);
+    }
+
+    // Image + text: split space evenly inside fixed card
+    &--stacked {
+      .home-carousel__media {
+        flex: 1 1 52%;
+        min-height: 0;
+        height: auto;
+      }
+
+      .home-carousel__content {
+        flex: 1 1 48%;
+        min-height: 0;
+        justify-content: flex-start;
+        overflow-y: auto;
+      }
+    }
+
+    // Only image: fill entire fixed card
+    &--image-only {
+      .home-carousel__media {
+        flex: 1 1 auto;
+        min-height: 0;
+        height: 100%;
+      }
+    }
+
+    // Only text: center inside same fixed card
+    &--text-only {
+      .home-carousel__content {
+        flex: 1 1 auto;
+        min-height: 0;
+        height: 100%;
+        justify-content: center;
+        overflow-y: auto;
+      }
+    }
+  }
+
+  &__media {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: rgba($ltcl-navy, 0.55);
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 0.2rem;
+    padding: 0.35rem 0.4rem;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  &__title {
+    margin: 0;
+    width: 100%;
+    font-family: $font-heading;
+    font-size: 0.68rem;
+    font-weight: $font-weight-bold;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: $ltcl-gold-bright;
+    line-height: 1.2;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+
+  &__desc {
+    margin: 0;
+    width: 100%;
+    font-size: 0.58rem;
+    line-height: 1.25;
+    color: $ltcl-mist;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+
+  @media #{$lg-up} {
+    --carousel-card-w: 152px;
+    --carousel-card-h: 170px;
+    --carousel-gap: 0.6rem;
+  }
+
+  @media #{$md-only} {
+    --carousel-card-w: 118px;
+    --carousel-card-h: 136px;
+    --carousel-gap: 0.4rem;
+
+    padding-block: 1rem;
+
+    &__title {
+      font-size: 0.55rem;
+      letter-spacing: 0.03em;
+    }
+
+    &__desc {
+      font-size: 0.46rem;
+    }
+
+    &__content {
+      padding: 0.28rem 0.3rem;
+      gap: 0.12rem;
+    }
+  }
+
+  // Mobile: equal cards, ~4.5–5 in view
+  @media #{$sm-down} {
+    --carousel-card-w: calc((100vw - 1.5rem) / 4.6);
+    --carousel-card-h: 118px;
+    --carousel-gap: 0.4rem;
+
+    padding-block: 0.85rem;
+
+    &__card {
+      border-radius: $radius-md;
+    }
+
+    &__title {
+      font-size: 0.48rem;
+      letter-spacing: 0.02em;
+      line-height: 1.15;
+    }
+
+    &__desc {
+      font-size: 0.4rem;
+      line-height: 1.2;
+    }
+
+    &__content {
+      padding: 0.22rem 0.25rem;
+      gap: 0.1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    &__track {
+      animation: none;
+      flex-wrap: wrap;
+      width: 100%;
+      justify-content: center;
+      gap: var(--carousel-gap);
+    }
+
+    &__group {
+      flex-wrap: wrap;
+      justify-content: center;
+      padding-right: 0;
+      gap: var(--carousel-gap);
+
+      &:nth-child(2) {
+        display: none;
+      }
+    }
+  }
+}

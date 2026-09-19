@@ -1,0 +1,792 @@
+@use "../variables" as *;
+@use "../mixins" as *;
+
+// ============================================
+// MODALS (admin base + client-specific extensions)
+// ============================================
+
+.modal-content {
+  border-radius: $radius-lg;
+  border: 1px solid $theme-alpha-14;
+  box-shadow: $shadow-card;
+  background: linear-gradient(
+    180deg,
+    $theme-bg-alpha-98 0%,
+    $theme-surface-alpha-96 100%
+  );
+  color: $theme-text;
+}
+
+.modal-header {
+  border-bottom: 1px solid $theme-alpha-14;
+  padding: $spacing-xl $spacing-2xl;
+
+  .modal-title {
+    font-weight: $font-weight-semibold;
+    color: $theme-heading;
+    font-size: $font-size-2xl;
+  }
+
+  .btn-close {
+    opacity: 0.5;
+
+    &:hover {
+      opacity: $opacity-full;
+    }
+  }
+}
+
+.modal-body {
+  padding: $spacing-2xl;
+  color: $theme-text;
+}
+
+.modal-footer {
+  border-top: 1px solid $theme-alpha-14;
+  padding: $spacing-lg $spacing-2xl;
+}
+
+.common-modal {
+  .modal-content {
+    background: linear-gradient(
+      180deg,
+      $black-alpha-deep,
+      $surface-alpha-deep
+    ) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid $theme-alpha-strong;
+    color: $theme-text;
+    overflow: hidden;
+  }
+
+  .common-modal-header {
+    position: relative;
+    background-color: $theme-bg;
+    border-bottom: 1px solid $theme-alpha-mid;
+    padding: $spacing-2xl 3.5rem $spacing-2xl $spacing-2xl;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    .btn-close {
+      position: absolute;
+      top: 50%;
+      right: 1.15rem;
+      z-index: 2;
+      margin: 0;
+      padding: 0;
+      width: 1.35rem;
+      height: 1.35rem;
+      opacity: $opacity-full;
+      transform: translateY(-50%);
+      background-size: 1.35rem;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='#{color-to-url($theme-primary)}'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e");
+      filter: none;
+
+      &:hover {
+        opacity: $opacity-muted;
+      }
+
+      &:focus {
+        opacity: $opacity-full;
+        box-shadow: 0 0 0 0.2rem $theme-alpha-35;
+      }
+    }
+  }
+
+  .common-modal-title {
+    color: $theme-primary;
+    font-size: $font-size-6xl;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .common-modal-icon {
+    color: $theme-primary;
+    font-size: 2.5rem;
+    line-height: $line-height-tight;
+
+    &.is-danger {
+      color: $theme-danger;
+    }
+  }
+
+  .common-modal-body {
+    color: $theme-heading;
+    font-size: $font-size-body-lg;
+    text-align: center;
+    padding: $spacing-2xl;
+    background-color: $theme-surface;
+  }
+
+  .common-modal-footer {
+    background: transparent !important;
+    border-top: 1px solid $theme-alpha-mid;
+    padding: $spacing-xl $spacing-2xl $spacing-2xl;
+
+    .btn {
+      min-height: $btn-min-height-lg;
+    }
+  }
+}
+
+// Logout / auth modals (client)
+.logout-modal {
+  .logout-icon {
+    color: $theme-primary;
+    font-size: 2.5rem;
+  }
+
+  .logout-modal-body {
+    color: $theme-heading;
+    font-size: 1.2rem;
+    text-align: center;
+    padding: $spacing-2xl;
+    background-color: $theme-surface;
+  }
+
+  .btn-logout-cancel {
+    @include btn-soft-surface;
+    padding: 0.7rem $spacing-2xl;
+    border-radius: $radius-md;
+    transition: background $duration-base $ease-standard, color $duration-base $ease-standard;
+
+    &:hover {
+      @include btn-soft-surface-hover;
+    }
+  }
+
+  .btn-logout-confirm {
+    @include btn-primary-surface-plain;
+    border: none;
+    padding: 0.7rem $spacing-2xl;
+    border-radius: $radius-md;
+    transition: background-color $duration-base $ease-standard, box-shadow $duration-base $ease-standard;
+
+    &:hover {
+      @include btn-primary-surface-plain-hover;
+    }
+  }
+}
+
+// Registration welcome modal (client)
+.welcome-modal {
+  .modal-dialog {
+    max-width: $modal-welcome-max-width;
+  }
+
+  .modal-content {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid $theme-alpha-28;
+    box-shadow:
+      0 24px 48px $black-alpha-45,
+      0 0 0 1px $theme-alpha-faint inset;
+
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: $border-width-thick;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        $theme-primary 35%,
+        $theme-secondary 65%,
+        transparent 100%
+      );
+      z-index: 2;
+    }
+  }
+
+  .common-modal-header {
+    padding: $spacing-3xl $spacing-2xl $spacing-xl;
+    border-bottom: none;
+    background:
+      radial-gradient(
+        circle at 50% 0%,
+        $theme-alpha-18 0%,
+        transparent 62%
+      ),
+      $theme-bg;
+  }
+
+  .common-modal-title {
+    width: 100%;
+  }
+
+  .common-modal-body.welcome-modal__body {
+    padding: 0 $spacing-2xl $spacing-2xl;
+    background: linear-gradient(
+      180deg,
+      $theme-surface-alpha-55 0%,
+      $theme-bg-alpha-92 100%
+    );
+    text-align: center;
+  }
+
+  .common-modal-footer {
+    padding: 0 $spacing-2xl $spacing-2xl;
+    border-top: none;
+    background: $theme-bg-alpha-96;
+  }
+
+  &__icon-ring {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 5.5rem;
+    height: 5.5rem;
+    border-radius: $radius-circle;
+    margin: 0 auto;
+    animation: welcome-icon-pop 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+
+    &::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      border: $border-width-md solid $theme-alpha-35;
+      animation: welcome-ring-pulse 2.4s $ease-in-out infinite;
+    }
+
+    &--success {
+      background: radial-gradient(
+        circle,
+        $theme-success-alpha-22 0%,
+        $theme-success-alpha-06 70%
+      );
+
+      &::before {
+        border-color: $theme-success-alpha-45;
+      }
+
+      .welcome-modal__icon {
+        color: $theme-success;
+      }
+    }
+  }
+
+  &__icon {
+    font-size: 2.75rem;
+    line-height: $line-height-tight;
+    filter: drop-shadow(0 4px 12px $theme-alpha-mid);
+  }
+
+  &__content {
+    animation: welcome-content-rise 0.5s $ease-standard 0.12s both;
+  }
+
+  &__title {
+    margin: 0 0 $spacing-md;
+    font-size: clamp(1.35rem, 3.5vw, 1.65rem);
+    font-weight: $font-weight-bold;
+    line-height: $line-height-base;
+    color: $theme-heading;
+    letter-spacing: $letter-spacing-snug;
+  }
+
+  &__name {
+    display: inline-block;
+    background: linear-gradient(135deg, $theme-primary, $theme-secondary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    word-break: break-word;
+  }
+
+  &__subtitle {
+    margin: 0 0 0.65rem;
+    font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+    line-height: 1.6;
+    color: $theme-text-alpha-90;
+
+    strong {
+      color: $theme-secondary;
+      font-weight: $font-weight-bold;
+      letter-spacing: $letter-spacing-wide;
+    }
+  }
+
+  &__message {
+    margin: 0 0 $spacing-xl;
+    font-size: clamp(0.9rem, 2.4vw, 1rem);
+    line-height: $line-height-loose;
+    color: $theme-muted;
+    padding: 0 $spacing-2xs;
+  }
+
+  &__credentials {
+    display: grid;
+    gap: $spacing-sm;
+    margin-bottom: 1.1rem;
+  }
+
+  &__credential-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: $spacing-xs;
+    padding: 0.85rem $spacing-lg;
+    border-radius: $radius-md;
+    border: 1px solid $theme-alpha-20;
+    background: linear-gradient(
+      135deg,
+      $theme-surface-alpha-18 0%,
+      $theme-bg-alpha-75 100%
+    );
+    box-shadow: $shadow-inset-highlight;
+    text-align: left;
+  }
+
+  &__credential-label {
+    font-size: 0.72rem;
+    font-weight: $font-weight-bold;
+    letter-spacing: $letter-spacing-widest;
+    text-transform: uppercase;
+    color: $theme-muted;
+  }
+
+  &__credential-value {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: $spacing-sm;
+    min-width: 0;
+
+    code {
+      flex: 1;
+      min-width: 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+        monospace;
+      font-size: clamp(0.85rem, 2.2vw, 0.95rem);
+      font-weight: $font-weight-semibold;
+      color: $theme-heading;
+      background: transparent;
+      border: none;
+      padding: 0;
+      word-break: break-all;
+    }
+  }
+
+  &__copy {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: $spacing-3xl;
+    height: $spacing-3xl;
+    border-radius: $radius-sm;
+    border: 1px solid $theme-alpha-28;
+    background: $theme-alpha-10;
+    color: $theme-primary;
+    transition:
+      background $duration-base $ease-standard,
+      border-color $duration-base $ease-standard,
+      transform $duration-base $ease-standard;
+
+    .copy-action-icon {
+      color: inherit;
+    }
+
+    &:hover {
+      background: $theme-alpha-20;
+      border-color: $theme-alpha-strong;
+      transform: scale(1.05);
+    }
+  }
+
+  &__status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    margin: 0 auto $spacing-lg;
+    padding: 0.45rem $spacing-lg;
+    border-radius: $radius-pill;
+    font-size: 0.78rem;
+    font-weight: $font-weight-bold;
+    letter-spacing: $letter-spacing-wider;
+    text-transform: uppercase;
+
+    &--success {
+      color: $theme-success;
+      background: $theme-success-alpha-14;
+      border: 1px solid $theme-success-alpha-32;
+    }
+  }
+
+  &__status-dot {
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: $radius-circle;
+    background: currentColor;
+    box-shadow: 0 0 8px currentColor;
+    animation: welcome-status-blink 1.8s $ease-in-out infinite;
+  }
+
+  &__note {
+    padding: 0.9rem $spacing-lg;
+    border-radius: $radius-md;
+    border: 1px solid $theme-alpha-16;
+    background: $theme-alpha-06;
+    text-align: left;
+
+    p {
+      margin: 0;
+      font-size: clamp(0.82rem, 2.2vw, 0.9rem);
+      line-height: $line-height-loose;
+      color: $theme-text-alpha-82;
+    }
+  }
+
+  &__cta {
+    @include btn-primary-surface;
+    border: none !important;
+    border-radius: $radius-md !important;
+    font-weight: $font-weight-semibold !important;
+    font-size: $font-size-body !important;
+    padding: 0.8rem $spacing-2xl !important;
+    transition:
+      transform $duration-base $ease-standard,
+      background-color $duration-base $ease-standard,
+      box-shadow $duration-base $ease-standard !important;
+
+    &:hover {
+      @include btn-primary-surface-hover;
+      transform: translateY(-1px);
+    }
+  }
+
+  @media #{$sm-down} {
+    .modal-dialog {
+      margin: 0.75rem;
+      max-width: calc(100% - 1.5rem);
+    }
+
+    .common-modal-header {
+      padding: $spacing-2xl $spacing-lg $spacing-lg;
+    }
+
+    .common-modal-body.welcome-modal__body {
+      padding: 0 $spacing-lg $spacing-lg;
+    }
+
+    .common-modal-footer {
+      padding: 0 $spacing-lg $spacing-lg;
+    }
+
+    &__icon-ring {
+      width: 4.75rem;
+      height: 4.75rem;
+    }
+
+    &__icon {
+      font-size: 2.25rem;
+    }
+
+    &__credential-card {
+      padding: 0.75rem 0.85rem;
+    }
+
+    &__credential-value {
+      flex-wrap: wrap;
+    }
+
+    &__note {
+      padding: 0.75rem 0.85rem;
+    }
+  }
+}
+
+@keyframes welcome-icon-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.65);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes welcome-ring-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.06);
+    opacity: 0.65;
+  }
+}
+
+@keyframes welcome-content-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes welcome-status-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.45;
+  }
+}
+
+// News details modal (client)
+.news-details-modal {
+  .common-modal-title {
+    color: $theme-primary;
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-semibold;
+    line-height: 1.4;
+    word-wrap: break-word;
+  }
+
+  .news-details-modal-body {
+    padding: $spacing-2xl;
+    color: $theme-text;
+    max-height: 70vh;
+    overflow-y: auto;
+
+    .news-details-title {
+      margin: 0 0 $spacing-lg;
+      color: $theme-primary;
+      font-size: $font-size-base;
+      font-weight: $font-weight-semibold;
+      letter-spacing: $letter-spacing-normal;
+      line-height: 1.45;
+    }
+
+    .news-details-slider {
+      margin-bottom: $spacing-xl;
+    }
+
+    .news-details-image-frame {
+      position: relative;
+      width: 100%;
+      height: $modal-news-media-height;
+      border-radius: $radius-md;
+      overflow: hidden;
+      background: $theme-surface-alt-alpha-85;
+      box-shadow: $shadow-control-sm;
+    }
+
+    .news-details-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      opacity: 0;
+      transition: opacity 0.55s $ease-standard;
+      pointer-events: none;
+
+      &.is-active {
+        opacity: $opacity-full;
+      }
+    }
+
+    .news-details-dots {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      justify-content: center;
+      margin-top: 0.85rem;
+    }
+
+    .news-details-dot {
+      width: 9px;
+      height: 9px;
+      padding: 0;
+      border: none;
+      border-radius: $radius-circle;
+      background: $theme-alpha-35;
+      cursor: pointer;
+      transition: background $duration-base $ease-standard, transform $duration-base $ease-standard;
+
+      &.is-active,
+      &:hover {
+        background: $theme-primary;
+        transform: scale(1.15);
+      }
+    }
+
+    .news-details-content {
+      .news-details-description {
+        color: $theme-text-alpha-88;
+        font-size: $font-size-body;
+        line-height: $line-height-body;
+        max-height: calc(1.8em * 5);
+        margin-bottom: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        overscroll-behavior: contain;
+        white-space: pre-line;
+        word-wrap: break-word;
+        scrollbar-width: thin;
+        scrollbar-color: $theme-alpha-strong transparent;
+
+        &::-webkit-scrollbar {
+          width: 4px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+          background: $theme-alpha-strong;
+          border-radius: $radius-pill;
+        }
+      }
+    }
+  }
+
+  @media #{$bp-md-max-inclusive} {
+    .common-modal-title {
+      font-size: 1.15rem;
+    }
+
+    .news-details-modal-body {
+      padding: $spacing-xl;
+      max-height: 75vh;
+
+      .news-details-image-frame {
+        height: 240px;
+      }
+
+      .news-details-content .news-details-description {
+        font-size: 0.95rem;
+        line-height: 1.7;
+        max-height: calc(1.7em * 5);
+      }
+    }
+  }
+
+  @media #{$sm-down} {
+    .common-modal-title {
+      font-size: $font-size-body;
+    }
+
+    .news-details-modal-body {
+      padding: $spacing-lg;
+      max-height: 80vh;
+
+      .news-details-title {
+        font-size: 0.8rem;
+      }
+
+      .news-details-image-frame {
+        height: 200px;
+      }
+
+      .news-details-content .news-details-description {
+        font-size: $font-size-md-plus;
+        line-height: 1.6;
+        max-height: calc(1.6em * 5);
+      }
+    }
+  }
+}
+
+// Testimonial details modal (client)
+.testimonial-details-modal {
+  .common-modal-title {
+    color: $theme-primary;
+    font-size: clamp(1.05rem, 3vw, 1.35rem);
+    font-weight: $font-weight-semibold;
+    line-height: 1.35;
+    word-wrap: break-word;
+  }
+
+  .testimonial-details-modal-body {
+    padding: $spacing-xl $spacing-2xl $spacing-2xl;
+    max-height: 70vh;
+    overflow-y: auto;
+  }
+}
+
+.testimonial-details {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  .home-showcase__stars {
+    font-size: 0.9rem;
+    gap: 0.2rem;
+  }
+
+  &__quote {
+    position: relative;
+    padding-left: 1.6rem;
+
+    p {
+      margin: 0;
+      font-size: clamp(0.92rem, 2.2vw, 1.02rem);
+      line-height: 1.7;
+      color: $theme-text;
+      white-space: pre-line;
+      word-wrap: break-word;
+
+      + p {
+        margin-top: 0.75rem;
+      }
+    }
+  }
+
+  &__icon {
+    position: absolute;
+    top: 0.15rem;
+    left: 0;
+    color: $theme-primary;
+    font-size: 0.95rem;
+    opacity: 0.85;
+  }
+
+  &__meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid $theme-alpha-14;
+    text-align: center;
+  }
+
+  &__name {
+    font-family: $font-heading;
+    font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+    font-weight: 700;
+    color: $theme-heading;
+  }
+
+  &__role {
+    font-size: clamp(0.8rem, 2vw, 0.9rem);
+    color: $theme-muted;
+    line-height: 1.4;
+  }
+
+  .home-showcase__stars {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,86 @@
+@use "variables" as *;
+
+.text-success {
+  color: $theme-success !important;
+}
+
+.bg-light {
+  background-color: $theme-bg-light !important;
+  color: $theme-text !important;
+}
+
+.text-dark {
+  color: $theme-text !important;
+}
+
+.text-danger {
+  color: $theme-danger !important;
+}
+
+.text-muted {
+  color: $theme-muted !important;
+}
+
+.text-accent,
+.text-gold {
+  color: $theme-accent !important;
+}
+
+.text-accent-bright {
+  color: $theme-accent-bright !important;
+}
+
+.text-ivory,
+.text-heading {
+  color: $theme-heading !important;
+}
+
+.text-silk {
+  color: $theme-silk !important;
+}
+
+.text-khaki {
+  color: $theme-khaki !important;
+}
+
+.text-khaki-light {
+  color: $theme-khaki-light !important;
+}
+
+.text-sky {
+  color: $theme-sky !important;
+}
+
+.text-teal {
+  color: $theme-accent-alt !important;
+}
+
+.section-eyebrow {
+  display: inline-block;
+  font-family: $font-heading;
+  font-size: $font-size-md;
+  font-weight: $font-weight-semibold;
+  letter-spacing: $letter-spacing-eyebrow;
+  text-transform: uppercase;
+  color: $theme-accent;
+}
+
+.skip-link {
+  position: absolute;
+  left: $spacing-md;
+  top: $spacing-md;
+  z-index: $z-skip-link;
+  padding: $spacing-sm 0.85rem;
+  background: $theme-accent;
+  color: $theme-text-on-primary;
+  border-radius: $radius-xs;
+  text-decoration: none;
+  transform: translateY(-200%);
+  transition: transform $duration-fast $ease-standard;
+
+  &:focus {
+    transform: translateY(0);
+    outline: 2px solid $theme-accent-bright;
+    outline-offset: 2px;
+  }
+}

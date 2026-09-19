@@ -1,0 +1,59 @@
+@use "../variables" as *;
+
+// -----------------------------------------------------------------------------
+// react-toastify
+// -----------------------------------------------------------------------------
+:root {
+  --toastify-color-light: #{$toastify-color-light};
+  --toastify-color-dark: #{$toastify-color-dark};
+  --toastify-color-info: #{$toastify-color-info};
+  --toastify-color-success: #{$toastify-color-success};
+  --toastify-color-warning: #{$toastify-color-warning};
+  --toastify-color-error: #{$toastify-color-error};
+  --toastify-text-color-light: #{$toastify-text-color-light};
+  --toastify-text-color-dark: #{$toastify-text-color-dark};
+  --toastify-icon-color-info: var(--toastify-color-info);
+  --toastify-icon-color-success: var(--toastify-color-success);
+  --toastify-icon-color-warning: var(--toastify-color-warning);
+  --toastify-icon-color-error: var(--toastify-color-error);
+}
+
+// -----------------------------------------------------------------------------
+// Bootstrap / table placeholder skeleton — navy + gold shimmer (admin match)
+// -----------------------------------------------------------------------------
+@keyframes theme-placeholder-shimmer {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.placeholder {
+  position: relative !important;
+  overflow: hidden !important;
+  background-color: $placeholder-bg !important;
+  opacity: 1 !important;
+  border-radius: $radius-sm;
+  vertical-align: middle;
+
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 200%;
+    height: 100%;
+    background-image: $placeholder-shimmer, $placeholder-shimmer;
+    background-size: 50% 100%, 50% 100%;
+    background-position: 0 0, 100% 0;
+    background-repeat: no-repeat;
+    animation: theme-placeholder-shimmer 1.8s linear infinite;
+    will-change: transform;
+  }
+}
+
+// Kill Bootstrap's default light glow (causes white/gray cascade)
+.placeholder-glow .placeholder {
+  animation: none !important;
+}
